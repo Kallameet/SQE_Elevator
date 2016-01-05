@@ -42,4 +42,31 @@ public class FloorPanel extends JPanel {
 		_mainPanel.add(_buttonGoTo);
 		add(_mainPanel);
 	}
+	
+	public void setUpSelected(boolean data)
+	{
+		_buttonUp.setSelected(data);
+	}
+	
+	public void setDownSelected(boolean data)
+	{
+		_buttonDown.setSelected(data);
+	}
+	
+	public void setButtonsEnabled(boolean data)
+	{
+		_buttonDown.setEnabled(data);
+		_buttonUp.setEnabled(data);
+		_buttonGoTo.setEnabled(data);
+	}
+	
+	public boolean getUpSelected()
+	{
+		return _buttonUp.isSelected();
+	}
+	
+	public boolean getDownSelected()
+	{
+		return _buttonDown.isSelected();
+	}
 }
