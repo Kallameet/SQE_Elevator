@@ -128,13 +128,12 @@ public class ElevatorDummy implements IElevator {
 
 	@Override
 	public int getTarget(int elevatorNumber) throws RemoteException {
-		return 4;
+		return _dummyElevatorInfos.get(elevatorNumber).get_targetFloor();
 	}
 
 	@Override
 	public void setCommittedDirection(int elevatorNumber, int direction) throws RemoteException {
-		// TODO Auto-generated method stub
-
+		_dummyElevatorInfos.get(elevatorNumber).set_direction(direction);
 	}
 
 	@Override
@@ -144,9 +143,18 @@ public class ElevatorDummy implements IElevator {
 	}
 
 	@Override
-	public void setTarget(int elevatorNumber, int target) throws RemoteException {
-		// TODO Auto-generated method stub
-
+	public void setTarget(final int elevatorNumber, final int target) throws RemoteException {
+		_dummyElevatorInfos.get(elevatorNumber).set_targetFloor(target);
+		
+		new java.util.Timer().schedule(
+				new java.util.TimerTask() {
+					@Override
+					public void run(){
+						_dummyElevatorInfos.get(elevatorNumber).set_currentFloor(target);
+					}
+				},
+				1000
+		);
 	}
 
 	@Override

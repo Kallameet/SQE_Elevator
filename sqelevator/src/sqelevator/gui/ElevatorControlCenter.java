@@ -10,26 +10,23 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
+import sqelevator.controller.ElevatorUpdateProvider;
 import sqelevator.model.IElevator;
+import sqelevator.model.IElevatorInfo;
 
 public class ElevatorControlCenter extends JFrame implements IElevatorControlCenter {
-
-	public static void main(String[] args) {
-		ElevatorControlCenter gui = new ElevatorControlCenter(3);
-		gui.setDirection(0, IElevator.ELEVATOR_DIRECTION_UP);
-		gui.setDirection(1, IElevator.ELEVATOR_DIRECTION_DOWN);
-		gui.setDirection(2, IElevator.ELEVATOR_DIRECTION_UNCOMMITTED);
-		gui.setSpeed(0, 25);
-	}
 	
 	private JPanel mainPanel;
+	private ElevatorUpdateProvider _updateProvider;
 	
 	/*
 	 * List containing the panels for all elevators
 	 */
 	List<IElevatorControl> _elevators;
 	
-	public ElevatorControlCenter(int numberOfElevators) {
+	public ElevatorControlCenter(List<IElevatorInfo> elevatorInfos, ElevatorUpdateProvider updateProvider) {
+		_updateProvider = updateProvider;
+		
 		setTitle("Elevator Control Center");
 		getContentPane().setBackground(Color.white);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,9 +40,9 @@ public class ElevatorControlCenter extends JFrame implements IElevatorControlCen
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.LINE_AXIS));
 		
 		_elevators = new ArrayList<IElevatorControl>();
-		for(int i = 0; i < numberOfElevators; i++)
+		for(int i = 0; i < elevatorInfos.size(); i++)
 		{
-			ElevatorPanel panel = new ElevatorPanel(i + 1);
+			ElevatorPanel panel = new ElevatorPanel(i, elevatorInfos.get(i), updateProvider);
 			_elevators.add(panel);
 			mainPanel.add(panel);
 		}
@@ -112,12 +109,6 @@ public class ElevatorControlCenter extends JFrame implements IElevatorControlCen
 	public void setFloorHeight(int elevator, int height) {
 		if(_elevators.size() > elevator)
 			_elevators.get(elevator).setFloorHeight(height);
-	}
-
-	@Override
-	public void setNumberOfFloors(int elevator, int floors) {
-		if(_elevators.size() > elevator)
-			_elevators.get(elevator).setNumberOfFloors(floors);
 	}
 
 	@Override
@@ -202,14 +193,6 @@ public class ElevatorControlCenter extends JFrame implements IElevatorControlCen
 	public int getFloorHeight(int elevator) {
 		if(_elevators.size() > elevator)
 			return _elevators.get(elevator).getFloorHeight();
-		else
-			return -1;
-	}
-
-	@Override
-	public int getNumberOfFloors(int elevator) {
-		if(_elevators.size() > elevator)
-			return _elevators.get(elevator).getNumberOfFloors();
 		else
 			return -1;
 	}

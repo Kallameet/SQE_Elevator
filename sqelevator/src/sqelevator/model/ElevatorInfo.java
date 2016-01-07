@@ -2,7 +2,7 @@ package sqelevator.model;
 
 import java.util.Observable;
 
-public class ElevatorInfo extends Observable implements IElevatorInfo
+public class ElevatorInfo implements IElevatorInfo
 {
 	public static final int NUMBER_OF_FLOORS = 5;
 	
@@ -20,7 +20,7 @@ public class ElevatorInfo extends Observable implements IElevatorInfo
 	
 	private double _distance = 0;
 	
-	private double _weight = 0;
+	private int _weight = 0;
 	
 	private double _capacity = 0;
 	
@@ -94,7 +94,7 @@ public class ElevatorInfo extends Observable implements IElevatorInfo
 	 * @see sqelevator.model.IElevatorInfo#get_weight()
 	 */
 	@Override
-	public double get_weight() {
+	public int get_weight() {
 		return _weight;
 	}
 
@@ -198,7 +198,7 @@ public class ElevatorInfo extends Observable implements IElevatorInfo
 	 * @see sqelevator.model.IElevatorInfo#set_weight(double)
 	 */
 	@Override
-	public void set_weight(double _weight) {
+	public void set_weight(int _weight) {
 		this._weight = _weight;
 	}
 

@@ -1,6 +1,8 @@
 package sqelevator.gui;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -9,19 +11,26 @@ import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import sqelevator.controller.ElevatorUpdateProvider;
+import sqelevator.model.ElevatorMode;
+
 public class FloorPanel extends JPanel {
 
-	int _number;
+	int _floorNumber;
+	int _elevatorNumber;
+	ElevatorUpdateProvider _updateProvider;
 	
 	JPanel _mainPanel;
 	JToggleButton _buttonUp;
 	JToggleButton _buttonDown;
 	JButton _buttonGoTo;
 	
-	public FloorPanel(int number)
+	public FloorPanel(int floorNumber, int elevatorNumber, ElevatorUpdateProvider updateProvider)
 	{
-		_number = number;
-		setBorder(new TitledBorder(null, "Floor " + number,TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		_updateProvider = updateProvider;
+		_elevatorNumber = elevatorNumber;
+		_floorNumber = floorNumber;
+		setBorder(new TitledBorder(null, "Floor " + floorNumber,TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setBounds(10, 10, 568, 50);
 		
 		// main Panel
@@ -32,13 +41,22 @@ public class FloorPanel extends JPanel {
 		
 		_buttonUp = new JToggleButton("Up");
 		_buttonUp.setSelected(false);
+		_buttonUp.setEnabled(false);
 		_mainPanel.add(_buttonUp);
 		
 		_buttonDown = new JToggleButton("Down");
 		_buttonDown.setSelected(false);
+		_buttonDown.setEnabled(false);
 		_mainPanel.add(_buttonDown);
 		
 		_buttonGoTo = new JButton("GO");
+		_buttonGoTo.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				_updateProvider.notifyChanged(_elevatorNumber, ElevatorMode.MANUAL, _floorNumber);
+			}
+		});
 		_mainPanel.add(_buttonGoTo);
 		add(_mainPanel);
 	}
@@ -55,8 +73,6 @@ public class FloorPanel extends JPanel {
 	
 	public void setButtonsEnabled(boolean data)
 	{
-		_buttonDown.setEnabled(data);
-		_buttonUp.setEnabled(data);
 		_buttonGoTo.setEnabled(data);
 	}
 	

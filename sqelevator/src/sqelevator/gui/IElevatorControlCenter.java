@@ -73,12 +73,6 @@ public interface IElevatorControlCenter {
 	public void setFloorHeight(int elevator, int height);
 	public int getFloorHeight(int elevator);
 	
-	/**
-	 * set the number of floors for the elevator position view
-	 * @param floors number of floors
-	 */
-	public void setNumberOfFloors(int elevator, int floors);
-	public int getNumberOfFloors(int elevator);
 	
 	/**
 	 * when the target is reached state button of the floor 

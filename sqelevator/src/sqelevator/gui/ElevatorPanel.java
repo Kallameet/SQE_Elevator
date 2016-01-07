@@ -1,4 +1,5 @@
 package sqelevator.gui;
+import sqelevator.controller.ElevatorUpdateProvider;
 import sqelevator.model.*;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -25,10 +26,11 @@ import sqelevator.model.IElevator;
  * Represents the view of a single elevator 
  */
 public class ElevatorPanel extends JPanel implements IElevatorControl {
-
-	int _elevatorNumber;
-	int _numberOfFloors = 5;
 	
+	int _numberOfFloors;
+	int _elevatorNumber;
+	ElevatorUpdateProvider _updateProvider;
+
 	JPanel _mainPanel;
 	JPanel _modePanel;
 	JPanel _informationPanel;
@@ -69,10 +71,11 @@ public class ElevatorPanel extends JPanel implements IElevatorControl {
 	ImageIcon _arrowDown = new ImageIcon("res/img/arrow_down.png");
 	ImageIcon _arrowEmpty = new ImageIcon("res/img/arrow_empty.png");
 	
-	public ElevatorPanel(int number)
+	public ElevatorPanel(int number, IElevatorInfo elevator, ElevatorUpdateProvider updateProvider)
 	{
+		_updateProvider = updateProvider;
 		_elevatorNumber = number;
-		setBorder(new TitledBorder(null, "Elevator " + number,TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		setBorder(new TitledBorder(null, "Elevator " + (number + 1),TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setBounds(10, 10, 568, 50);
 		
 		// main Panel
@@ -94,10 +97,8 @@ public class ElevatorPanel extends JPanel implements IElevatorControl {
 				for(int i = 0; i < _floors.size(); i++)
 					_floors.get(i).setButtonsEnabled(false);
 				
-				for(int i = 0; i < _elevatorButtons.size(); i++)
-					_elevatorButtons.get(i).setEnabled(false);
-				
 				_modeButtonManual.setSelected(false);
+				_updateProvider.notifyChanged(_elevatorNumber, ElevatorMode.AUTOMATIC, -1);
 			}
 		});
 		_modePanel.add(_modeButtonAutomatic);
@@ -111,10 +112,8 @@ public class ElevatorPanel extends JPanel implements IElevatorControl {
 				for(int i = 0; i < _floors.size(); i++)
 					_floors.get(i).setButtonsEnabled(true);
 				
-				for(int i = 0; i < _elevatorButtons.size(); i++)
-					_elevatorButtons.get(i).setEnabled(true);
-				
 				_modeButtonAutomatic.setSelected(false);
+				_updateProvider.notifyChanged(_elevatorNumber, ElevatorMode.MANUAL, -1);
 			}
 		});
 		_modePanel.add(_modeButtonManual);
@@ -218,32 +217,21 @@ public class ElevatorPanel extends JPanel implements IElevatorControl {
 		_buttonPanel.setBorder(new TitledBorder(null, "Buttons",TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		_buttonPanel.add(Box.createRigidArea(new Dimension(50,0)));
 		
-		_floor4Button = new JToggleButton("4");
-		_floor4Button.setSelected(false);
-		_buttonPanel.add(_floor4Button);
+		_numberOfFloors = elevator.get_elevatorButtons().length;
 		
-		_floor3Button = new JToggleButton("3");
-		_floor3Button.setSelected(false);
-		_buttonPanel.add(_floor3Button);
+		for(int i = 0; i < _numberOfFloors; i++)
+		{
+			JToggleButton button = new JToggleButton(Integer.toString(i));
+			button.setSelected(false);
+			button.setEnabled(false);
+			_elevatorButtons.add(button);
+		}
 		
-		_floor2Button = new JToggleButton("2");
-		_floor2Button.setSelected(false);
-		_buttonPanel.add(_floor2Button);
+		for(int i = _elevatorButtons.size() - 1; i >= 0;i--)
+		{
+			_buttonPanel.add(_elevatorButtons.get(i));
+		}
 		
-		_floor1Button = new JToggleButton("1");
-		_floor1Button.setSelected(false);
-		_buttonPanel.add(_floor1Button);
-		
-		_floor0Button = new JToggleButton("0");
-		_floor0Button.setSelected(false);
-
-		_elevatorButtons.add(_floor0Button);
-		_elevatorButtons.add(_floor1Button);
-		_elevatorButtons.add(_floor2Button);
-		_elevatorButtons.add(_floor3Button);
-		_elevatorButtons.add(_floor4Button);
-		
-		_buttonPanel.add(_floor0Button);
 		_positionAndButtonPanel.add(_buttonPanel);
 		
 		_floors = new ArrayList<FloorPanel>();
@@ -253,7 +241,7 @@ public class ElevatorPanel extends JPanel implements IElevatorControl {
 		
 		for(int i = 0; i < _numberOfFloors; i++)
 		{
-			FloorPanel floor = new FloorPanel(i);
+			FloorPanel floor = new FloorPanel(i, _elevatorNumber, _updateProvider);
 			_floors.add(floor);
 		}
 		
@@ -364,11 +352,6 @@ public class ElevatorPanel extends JPanel implements IElevatorControl {
 	}
 
 	@Override
-	public void setNumberOfFloors(int floors) {
-		_numberOfFloors = floors;
-	}
-
-	@Override
 	public void setTargetReached(int target) {
 		// TODO Auto-generated method stub
 	}
@@ -442,11 +425,6 @@ public class ElevatorPanel extends JPanel implements IElevatorControl {
 	@Override
 	public int getFloorHeight() {
 		return Integer.parseInt(_floorHeightLabelData.getText()); 
-	}
-
-	@Override
-	public int getNumberOfFloors() {
-		return _numberOfFloors;
 	}
 
 	@Override

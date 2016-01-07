@@ -14,14 +14,23 @@ public class ElevatorDataExchange implements IElevatorDataReader, IElevatorDataW
 	}
 
 	@Override
-	public void setFloor(int elevatorNumber, int target) {
-		// TODO Auto-generated method stub
-		
+	public void setTarget(int elevatorNumber, int target) {
+		try {
+			_elevator.setTarget(elevatorNumber, target);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void setMode(int elevatorNumber, ElevatorMode elevatorMode) {
-		// TODO Auto-generated method stub
+	public void setCommittedDirection(int elevatorNumber, int direction) {
+		try {
+			_elevator.setCommittedDirection(elevatorNumber, direction);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 

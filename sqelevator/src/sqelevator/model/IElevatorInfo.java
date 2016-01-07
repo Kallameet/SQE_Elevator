@@ -16,7 +16,7 @@ public interface IElevatorInfo {
 
 	double get_distance();
 
-	double get_weight();
+	int get_weight();
 
 	double get_capacity();
 	
@@ -44,7 +44,7 @@ public interface IElevatorInfo {
 
 	void set_distance(double _distance);
 
-	void set_weight(double _weight);
+	void set_weight(int _weight);
 	
 	void set_capacity(double _capacity);
 
