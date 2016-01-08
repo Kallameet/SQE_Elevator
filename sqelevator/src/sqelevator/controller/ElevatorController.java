@@ -9,7 +9,7 @@ import sqelevator.gui.IElevatorControlCenter;
 import sqelevator.model.ElevatorMode;
 import sqelevator.model.IElevatorDataWriter;
 import sqelevator.model.IElevatorInfo;
-import sqelevator.model.Poller;
+import sqelevator.model.IElevatorInfoProvider;
 
 public class ElevatorController implements IElevatorUpdateListener, Observer {
 	
@@ -44,7 +44,7 @@ public class ElevatorController implements IElevatorUpdateListener, Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		Poller poller = (Poller)arg0;
+		IElevatorInfoProvider poller = (IElevatorInfoProvider)arg0;
 		
 		_currentElevatorInfos = poller.getElevatorInfos();
 		for(int i = 0; i < _currentElevatorInfos.size(); i++)
@@ -72,7 +72,7 @@ public class ElevatorController implements IElevatorUpdateListener, Observer {
 		_elevatorControlCenter.setDoorStatus(elevatorNumber, elevatorInfo.get_doorStatus());
 	}
 
-	public void setView(ElevatorControlCenter gui) {
+	public void setView(IElevatorControlCenter gui) {
 		_elevatorControlCenter = gui;
 	}
 

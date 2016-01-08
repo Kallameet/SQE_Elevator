@@ -31,6 +31,7 @@ public class ElevatorDummy implements IElevator {
 			elevator.set_distance(5);
 			elevator.set_weight(94);
 			elevator.set_capacity(120);
+			elevator.set_targetFloor(4);
 			
 			boolean[] elevatorButtons = new boolean[NUMBER_OF_FLOORS];
 			boolean[] upButtons = new boolean[NUMBER_OF_FLOORS];
