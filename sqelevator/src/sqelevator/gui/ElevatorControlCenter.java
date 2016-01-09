@@ -120,7 +120,7 @@ public class ElevatorControlCenter extends JFrame implements IElevatorControlCen
 	@Override
 	public int getDirection(int elevator) {
 		if(_elevators.size() > elevator)
-			return _elevators.get(elevator).getTargetReached();
+			return _elevators.get(elevator).getDirection();
 		else
 			return -1;
 	}

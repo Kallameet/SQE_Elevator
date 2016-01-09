@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ElevatorControllerTests.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (10) (09.01.2016 01:10:04)</a> &gt; <a href="../../index.html" class="el_group">SQE_Elevator</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">sqelevator.tests</a> &gt; <span class="el_source">ElevatorControllerTests.java</span></div><h1>ElevatorControllerTests.java</h1><pre class="source lang-java linenums">package sqelevator.tests;
+
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
+
+import sqelevator.controller.ElevatorController;
+import sqelevator.dummy.DataWriterDummy;
+import sqelevator.dummy.ElevatorControlCenterDummy;
+import sqelevator.dummy.ElevatorInfoProviderDummy;
+import sqelevator.model.ElevatorInfo;
+import sqelevator.model.ElevatorMode;
+import sqelevator.model.IElevatorInfo;
+
+<span class="fc" id="L18">public class ElevatorControllerTests</span>
+{
+	@Test
+	public void UpdateElevatorTest_TargetIsSameFloorAsCurrent()
+	{	
+		//arrange
+<span class="fc" id="L24">		DataWriterDummy dataWriter = new DataWriterDummy();</span>
+		
+<span class="fc" id="L26">		int elevators = 1;</span>
+<span class="fc" id="L27">		ElevatorControlCenterDummy controlCenter = new ElevatorControlCenterDummy(elevators);</span>
+				
+<span class="fc" id="L29">		ElevatorInfo info = new ElevatorInfo();</span>
+<span class="fc" id="L30">		info.set_currentFloor(3);</span>
+<span class="fc" id="L31">		List&lt;IElevatorInfo&gt; infos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+<span class="fc" id="L32">		infos.add(info);</span>
+		
+<span class="fc" id="L34">		ElevatorInfoProviderDummy provider = new ElevatorInfoProviderDummy();</span>
+<span class="fc" id="L35">		provider.setElevatorInfos(infos);</span>
+		
+<span class="fc" id="L37">		ElevatorController controller = new ElevatorController(dataWriter);</span>
+<span class="fc" id="L38">		controller.setView(controlCenter);</span>
+		
+<span class="fc" id="L40">		controller.update(provider, null);</span>
+		
+		//act
+<span class="fc" id="L43">		controller.updateElevator(0, ElevatorMode.MANUAL, 3);</span>
+		
+		//assert
+<span class="fc" id="L46">		assertEquals(3, dataWriter.targetMap.get(0));</span>
+<span class="fc" id="L47">		assertEquals(2, dataWriter.directionMap.get(0));	</span>
+<span class="fc" id="L48">	}</span>
+	
+	@Test
+	public void UpdateElevatorTest_TargetIsLowerFloorAsCurrent()
+	{	
+		//arrange
+<span class="fc" id="L54">		DataWriterDummy dataWriter = new DataWriterDummy();</span>
+		
+<span class="fc" id="L56">		int elevators = 1;</span>
+<span class="fc" id="L57">		ElevatorControlCenterDummy controlCenter = new ElevatorControlCenterDummy(elevators);</span>
+				
+<span class="fc" id="L59">		ElevatorInfo info = new ElevatorInfo();</span>
+<span class="fc" id="L60">		info.set_currentFloor(3);</span>
+<span class="fc" id="L61">		List&lt;IElevatorInfo&gt; infos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+<span class="fc" id="L62">		infos.add(info);</span>
+		
+<span class="fc" id="L64">		ElevatorInfoProviderDummy provider = new ElevatorInfoProviderDummy();</span>
+<span class="fc" id="L65">		provider.setElevatorInfos(infos);</span>
+		
+<span class="fc" id="L67">		ElevatorController controller = new ElevatorController(dataWriter);</span>
+<span class="fc" id="L68">		controller.setView(controlCenter);</span>
+		
+<span class="fc" id="L70">		controller.update(provider, null);</span>
+		
+		//act
+<span class="fc" id="L73">		controller.updateElevator(0, ElevatorMode.MANUAL, 1);</span>
+		
+		//assert
+<span class="fc" id="L76">		assertEquals(1, dataWriter.targetMap.get(0));</span>
+<span class="fc" id="L77">		assertEquals(1, dataWriter.directionMap.get(0));	</span>
+<span class="fc" id="L78">	}</span>
+	
+	@Test
+	public void UpdateElevatorTest_TargetIsHigherFloorAsCurrent()
+	{	
+		//arrange
+<span class="fc" id="L84">		DataWriterDummy dataWriter = new DataWriterDummy();</span>
+		
+<span class="fc" id="L86">		int elevators = 1;</span>
+<span class="fc" id="L87">		ElevatorControlCenterDummy controlCenter = new ElevatorControlCenterDummy(elevators);</span>
+				
+<span class="fc" id="L89">		ElevatorInfo info = new ElevatorInfo();</span>
+<span class="fc" id="L90">		info.set_currentFloor(3);</span>
+<span class="fc" id="L91">		List&lt;IElevatorInfo&gt; infos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+<span class="fc" id="L92">		infos.add(info);</span>
+		
+<span class="fc" id="L94">		ElevatorInfoProviderDummy provider = new ElevatorInfoProviderDummy();</span>
+<span class="fc" id="L95">		provider.setElevatorInfos(infos);</span>
+		
+<span class="fc" id="L97">		ElevatorController controller = new ElevatorController(dataWriter);</span>
+<span class="fc" id="L98">		controller.setView(controlCenter);</span>
+		
+<span class="fc" id="L100">		controller.update(provider, null);</span>
+		
+		//act
+<span class="fc" id="L103">		controller.updateElevator(0, ElevatorMode.MANUAL, 5);</span>
+		
+		//assert
+<span class="fc" id="L106">		assertEquals(5, dataWriter.targetMap.get(0));</span>
+<span class="fc" id="L107">		assertEquals(0, dataWriter.directionMap.get(0));	</span>
+<span class="fc" id="L108">	}</span>
+	
+	@Test
+	public void UpdateGuiTest()
+	{	
+		//arrange
+<span class="fc" id="L114">		DataWriterDummy dataWriter = new DataWriterDummy();</span>
+		
+<span class="fc" id="L116">		int elevators = 1;</span>
+<span class="fc" id="L117">		ElevatorControlCenterDummy controlCenter = new ElevatorControlCenterDummy(elevators);</span>
+				
+<span class="fc" id="L119">		ElevatorInfo info = new ElevatorInfo();</span>
+<span class="fc" id="L120">		info.set_currentFloor(3);</span>
+<span class="fc" id="L121">		info.set_targetFloor(3);</span>
+<span class="fc" id="L122">		info.set_direction(1);</span>
+<span class="fc" id="L123">		info.set_floorHeight(10);</span>
+<span class="fc" id="L124">		info.set_speed(30);</span>
+<span class="fc" id="L125">		info.set_weight(100);</span>
+<span class="fc" id="L126">		info.set_doorStatus(2);</span>
+<span class="fc" id="L127">		List&lt;IElevatorInfo&gt; infos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+<span class="fc" id="L128">		infos.add(info);</span>
+		
+<span class="fc" id="L130">		ElevatorInfoProviderDummy provider = new ElevatorInfoProviderDummy();</span>
+<span class="fc" id="L131">		provider.setElevatorInfos(infos);</span>
+		
+<span class="fc" id="L133">		ElevatorController controller = new ElevatorController(dataWriter);</span>
+<span class="fc" id="L134">		controller.setView(controlCenter);</span>
+				
+		//act
+<span class="fc" id="L137">		controller.update(provider, null);</span>
+		
+		//assert
+<span class="fc" id="L140">		assertEquals(info.get_currentFloor(), controlCenter.getPosition(0));</span>
+<span class="fc" id="L141">		assertEquals(info.get_targetFloor(), controlCenter.getTarget(0));</span>
+<span class="fc" id="L142">		assertEquals(info.get_direction(), controlCenter.getDirection(0));</span>
+<span class="fc" id="L143">		assertEquals(info.get_floorHeight(), controlCenter.getFloorHeight(0));</span>
+<span class="fc" id="L144">		assertEquals(info.get_speed(), controlCenter.getSpeed(0));</span>
+<span class="fc" id="L145">		assertEquals(info.get_weight(), controlCenter.getWeight(0));</span>
+<span class="fc" id="L146">		assertEquals(info.get_doorStatus(), controlCenter.getDoorStatus(0));</span>
+		
+<span class="fc" id="L148">		assertEquals(2, dataWriter.directionMap.get(0));</span>
+<span class="fc" id="L149">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (10) (09.01.2016 01:10:04)</div></body></html>

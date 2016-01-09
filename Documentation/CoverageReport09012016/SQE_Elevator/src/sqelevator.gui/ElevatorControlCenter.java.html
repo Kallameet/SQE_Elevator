@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ElevatorControlCenter.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (10) (09.01.2016 01:10:04)</a> &gt; <a href="../../index.html" class="el_group">SQE_Elevator</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">sqelevator.gui</a> &gt; <span class="el_source">ElevatorControlCenter.java</span></div><h1>ElevatorControlCenter.java</h1><pre class="source lang-java linenums">package sqelevator.gui;
+
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
+
+import sqelevator.controller.ElevatorUpdateProvider;
+import sqelevator.model.IElevator;
+import sqelevator.model.IElevatorInfo;
+
+public class ElevatorControlCenter extends JFrame implements IElevatorControlCenter {
+	
+	private JPanel mainPanel;
+	private ElevatorUpdateProvider _updateProvider;
+	
+	/*
+	 * List containing the panels for all elevators
+	 */
+	List&lt;IElevatorControl&gt; _elevators;
+	
+<span class="fc" id="L27">	public ElevatorControlCenter(List&lt;IElevatorInfo&gt; elevatorInfos, ElevatorUpdateProvider updateProvider) {</span>
+<span class="fc" id="L28">		_updateProvider = updateProvider;</span>
+		
+<span class="fc" id="L30">		setTitle(&quot;Elevator Control Center&quot;);</span>
+<span class="fc" id="L31">		getContentPane().setBackground(Color.white);</span>
+<span class="fc" id="L32">		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="fc" id="L33">		setSize(800,800);</span>
+<span class="fc" id="L34">		setResizable(true);</span>
+<span class="fc" id="L35">		setVisible(true);</span>
+		
+<span class="fc" id="L37">		mainPanel = new JPanel();</span>
+<span class="fc" id="L38">		mainPanel.setBorder(new EmptyBorder(5, 5, 5, 5));</span>
+<span class="fc" id="L39">		setContentPane(mainPanel);</span>
+<span class="fc" id="L40">		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.LINE_AXIS));</span>
+		
+<span class="fc" id="L42">		_elevators = new ArrayList&lt;IElevatorControl&gt;();</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">		for(int i = 0; i &lt; elevatorInfos.size(); i++)</span>
+		{
+<span class="fc" id="L45">			ElevatorPanel panel = new ElevatorPanel(i, elevatorInfos.get(i), updateProvider);</span>
+<span class="fc" id="L46">			_elevators.add(panel);</span>
+<span class="fc" id="L47">			mainPanel.add(panel);</span>
+		}
+		
+<span class="fc" id="L50">		mainPanel.validate();</span>
+		
+<span class="fc" id="L52">	}</span>
+
+	@Override
+	public void setDirection(int elevator, int data) {
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L57">			_elevators.get(elevator).setDirection(data);</span>
+<span class="fc" id="L58">	}</span>
+
+	@Override
+	public void setWeight(int elevator, int data) {
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L63">			_elevators.get(elevator).setWeight(data);</span>
+<span class="fc" id="L64">	}</span>
+
+	@Override
+	public void setSpeed(int elevator, int data) {
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L69">			_elevators.get(elevator).setSpeed(data);</span>
+<span class="fc" id="L70">	}</span>
+
+	@Override
+	public void setDoorStatus(int elevator, int data) {
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L75">			_elevators.get(elevator).setDoorStatus(data);</span>
+<span class="fc" id="L76">	}</span>
+
+	@Override
+	public void setTarget(int elevator, int floor) {
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L81">			_elevators.get(elevator).setTarget(floor);</span>
+<span class="fc" id="L82">	}</span>
+
+	@Override
+	public void setPosition(int elevator, int data) {
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L87">			_elevators.get(elevator).setPosition(data);</span>
+<span class="fc" id="L88">	}</span>
+
+	@Override
+	public void setElevatorButtons(int elevator, boolean[] data) {
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L93">			_elevators.get(elevator).setElevatorButtons(data);</span>
+<span class="fc" id="L94">	}</span>
+
+	@Override
+	public void setFloorButtonsDown(int elevator, boolean[] data) {
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L99">			_elevators.get(elevator).setFloorButtonsDown(data);</span>
+<span class="fc" id="L100">	}</span>
+
+	@Override
+	public void setFloorButtonsUp(int elevator, boolean[] data) {
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L105">			_elevators.get(elevator).setFloorButtonsUp(data);</span>
+<span class="fc" id="L106">	}</span>
+
+	@Override
+	public void setFloorHeight(int elevator, int height) {
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L111">			_elevators.get(elevator).setFloorHeight(height);</span>
+<span class="fc" id="L112">	}</span>
+
+	@Override
+	public void setTargetReached(int elevator, int target) {
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="nc" id="L117">			_elevators.get(elevator).setTargetReached(target);</span>
+<span class="nc" id="L118">	}</span>
+
+	@Override
+	public int getDirection(int elevator) {
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L123">			return _elevators.get(elevator).getDirection();</span>
+		else
+<span class="nc" id="L125">			return -1;</span>
+	}
+
+	@Override
+	public int getWeight(int elevator) {
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L131">			return _elevators.get(elevator).getWeight();</span>
+		else
+<span class="nc" id="L133">			return -1;</span>
+	}
+
+	@Override
+	public int getSpeed(int elevator) {
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L139">			return _elevators.get(elevator).getSpeed();</span>
+		else
+<span class="nc" id="L141">			return -1;</span>
+	}
+
+	@Override
+	public int getDoorStatus(int elevator) {
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L147">			return _elevators.get(elevator).getDoorStatus();</span>
+		else
+<span class="nc" id="L149">			return -1;</span>
+	}
+
+	@Override
+	public int getTarget(int elevator) {
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L155">			return _elevators.get(elevator).getTarget();</span>
+		else
+<span class="nc" id="L157">			return -1;</span>
+	}
+
+	@Override
+	public int getPosition(int elevator) {
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L163">			return _elevators.get(elevator).getPosition();</span>
+		else
+<span class="nc" id="L165">			return -1;</span>
+	}
+
+	@Override
+	public boolean[] getElevatorButtons(int elevator) {
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L171">			return _elevators.get(elevator).getElevatorButtons();</span>
+		else
+<span class="nc" id="L173">			return null;</span>
+	}
+
+	@Override
+	public boolean[] getFloorButtonsDown(int elevator) {
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L179">			return _elevators.get(elevator).getFloorButtonsDown();</span>
+		else
+<span class="nc" id="L181">			return null;</span>
+	}
+
+	@Override
+	public boolean[] getFloorButtonsUp(int elevator) {
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L187">			return _elevators.get(elevator).getFloorButtonsUp();</span>
+		else
+<span class="nc" id="L189">			return null;</span>
+	}
+
+	@Override
+	public int getFloorHeight(int elevator) {
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="fc" id="L195">			return _elevators.get(elevator).getFloorHeight();</span>
+		else
+<span class="nc" id="L197">			return -1;</span>
+	}
+
+	@Override
+	public int getTargetReached(int elevator) {
+<span class="nc bnc" id="L202" title="All 2 branches missed.">		if(_elevators.size() &gt; elevator)</span>
+<span class="nc" id="L203">			return _elevators.get(elevator).getTargetReached();</span>
+		else
+<span class="nc" id="L205">			return -1;</span>
+	}
+	
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (10) (09.01.2016 01:10:04)</div></body></html>

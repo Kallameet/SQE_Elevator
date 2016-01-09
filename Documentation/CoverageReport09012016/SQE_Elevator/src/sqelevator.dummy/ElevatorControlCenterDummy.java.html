@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ElevatorControlCenterDummy.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (10) (09.01.2016 01:10:04)</a> &gt; <a href="../../index.html" class="el_group">SQE_Elevator</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">sqelevator.dummy</a> &gt; <span class="el_source">ElevatorControlCenterDummy.java</span></div><h1>ElevatorControlCenterDummy.java</h1><pre class="source lang-java linenums">package sqelevator.dummy;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import sqelevator.gui.IElevatorControlCenter;
+import sqelevator.model.ElevatorInfo;
+import sqelevator.model.IElevatorInfo;
+
+public class ElevatorControlCenterDummy implements IElevatorControlCenter
+{
+	List&lt;IElevatorInfo&gt; _dummyElevatorInfos;
+	
+<span class="fc" id="L14">	public ElevatorControlCenterDummy(int elevators)</span>
+	{
+<span class="fc" id="L16">		_dummyElevatorInfos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+		
+<span class="fc bfc" id="L18" title="All 2 branches covered.">		for (int i = 0; i &lt; elevators; i++)</span>
+		{
+<span class="fc" id="L20">			_dummyElevatorInfos.add(new ElevatorInfo());</span>
+		}
+<span class="fc" id="L22">	}</span>
+	
+	@Override
+	public void setDirection(int elevator, int data)
+	{
+<span class="fc" id="L27">		_dummyElevatorInfos.get(elevator).set_direction(data);		</span>
+<span class="fc" id="L28">	}</span>
+
+	@Override
+	public int getDirection(int elevator)
+	{
+<span class="fc" id="L33">		return _dummyElevatorInfos.get(elevator).get_direction();</span>
+	}
+
+	@Override
+	public void setWeight(int elevator, int data)
+	{
+<span class="fc" id="L39">		_dummyElevatorInfos.get(elevator).set_weight(data);</span>
+<span class="fc" id="L40">	}</span>
+
+	@Override
+	public int getWeight(int elevator)
+	{
+<span class="fc" id="L45">		return _dummyElevatorInfos.get(elevator).get_weight();</span>
+	}
+
+	@Override
+	public void setSpeed(int elevator, int data)
+	{
+<span class="fc" id="L51">		_dummyElevatorInfos.get(elevator).set_speed(data);</span>
+<span class="fc" id="L52">	}</span>
+
+	@Override
+	public int getSpeed(int elevator)
+	{
+<span class="fc" id="L57">		return _dummyElevatorInfos.get(elevator).get_speed();</span>
+	}
+
+	@Override
+	public void setDoorStatus(int elevator, int data)
+	{
+<span class="fc" id="L63">		_dummyElevatorInfos.get(elevator).set_doorStatus(data);</span>
+<span class="fc" id="L64">	}</span>
+
+	@Override
+	public int getDoorStatus(int elevator)
+	{
+<span class="fc" id="L69">		return _dummyElevatorInfos.get(elevator).get_doorStatus();</span>
+	}
+
+	@Override
+	public void setTarget(int elevator, int floor)
+	{
+<span class="fc" id="L75">		_dummyElevatorInfos.get(elevator).set_targetFloor(floor);</span>
+<span class="fc" id="L76">	}</span>
+
+	@Override
+	public int getTarget(int elevator)
+	{
+<span class="fc" id="L81">		return _dummyElevatorInfos.get(elevator).get_targetFloor();</span>
+	}
+
+	@Override
+	public void setPosition(int elevator, int data)
+	{
+<span class="fc" id="L87">		_dummyElevatorInfos.get(elevator).set_currentFloor(data);		</span>
+<span class="fc" id="L88">	}</span>
+
+	@Override
+	public int getPosition(int elevator)
+	{
+<span class="fc" id="L93">		return _dummyElevatorInfos.get(elevator).get_currentFloor();</span>
+	}
+
+	@Override
+	public void setElevatorButtons(int elevator, boolean[] data)
+	{
+<span class="fc" id="L99">		_dummyElevatorInfos.get(elevator).set_elevatorButtons(data);</span>
+		
+<span class="fc" id="L101">	}</span>
+
+	@Override
+	public boolean[] getElevatorButtons(int elevator)
+	{
+<span class="nc" id="L106">		return _dummyElevatorInfos.get(elevator).get_elevatorButtons();</span>
+	}
+
+	@Override
+	public void setFloorButtonsDown(int elevator, boolean[] data)
+	{
+<span class="fc" id="L112">		_dummyElevatorInfos.get(elevator).set_downButtons(data);</span>
+		
+<span class="fc" id="L114">	}</span>
+
+	@Override
+	public boolean[] getFloorButtonsDown(int elevator)
+	{
+<span class="nc" id="L119">		return _dummyElevatorInfos.get(elevator).get_downButtons();</span>
+	}
+
+	@Override
+	public void setFloorButtonsUp(int elevator, boolean[] data)
+	{
+<span class="fc" id="L125">		_dummyElevatorInfos.get(elevator).set_upButtons(data);		</span>
+<span class="fc" id="L126">	}</span>
+
+	@Override
+	public boolean[] getFloorButtonsUp(int elevator)
+	{
+<span class="nc" id="L131">		return _dummyElevatorInfos.get(elevator).get_upButtons();</span>
+	}
+
+	@Override
+	public void setFloorHeight(int elevator, int height)
+	{
+<span class="fc" id="L137">		_dummyElevatorInfos.get(elevator).set_floorHeight(height);		</span>
+<span class="fc" id="L138">	}</span>
+
+	@Override
+	public int getFloorHeight(int elevator)
+	{
+<span class="fc" id="L143">		return _dummyElevatorInfos.get(elevator).get_floorHeight();</span>
+	}
+
+	@Override
+	public void setTargetReached(int elevator, int target)
+<span class="nc" id="L148">	{}</span>
+
+	@Override
+	public int getTargetReached(int elevator)
+	{		
+<span class="nc" id="L153">		return 0;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (10) (09.01.2016 01:10:04)</div></body></html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ElevatorUpdateProvider.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (10) (09.01.2016 01:10:04)</a> &gt; <a href="../../index.html" class="el_group">SQE_Elevator</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">sqelevator.controller</a> &gt; <span class="el_source">ElevatorUpdateProvider.java</span></div><h1>ElevatorUpdateProvider.java</h1><pre class="source lang-java linenums">package sqelevator.controller;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+import sqelevator.model.ElevatorMode;
+
+
+<span class="fc" id="L10">public class ElevatorUpdateProvider {</span>
+	
+<span class="fc" id="L12">	List&lt;IElevatorUpdateListener&gt; listeners = new ArrayList&lt;IElevatorUpdateListener&gt;();</span>
+	
+	public void addListener(IElevatorUpdateListener listener)
+	{
+<span class="nc" id="L16">		listeners.add(listener);</span>
+<span class="nc" id="L17">	}</span>
+	
+	public void removeListener(IElevatorUpdateListener listener)
+	{
+<span class="nc" id="L21">		listeners.remove(listener);</span>
+<span class="nc" id="L22">	}</span>
+	
+	public void notifyChanged(int elevatorNumber, ElevatorMode mode, int floor)
+	{
+<span class="nc bnc" id="L26" title="All 2 branches missed.">		for(IElevatorUpdateListener listener : listeners)</span>
+		{
+<span class="nc" id="L28">			listener.updateElevator(elevatorNumber, mode, floor);</span>
+		}
+<span class="nc" id="L30">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (10) (09.01.2016 01:10:04)</div></body></html>

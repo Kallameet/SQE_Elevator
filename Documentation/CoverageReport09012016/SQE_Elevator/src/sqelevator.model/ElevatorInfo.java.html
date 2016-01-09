@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ElevatorInfo.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (10) (09.01.2016 01:10:04)</a> &gt; <a href="../../index.html" class="el_group">SQE_Elevator</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">sqelevator.model</a> &gt; <span class="el_source">ElevatorInfo.java</span></div><h1>ElevatorInfo.java</h1><pre class="source lang-java linenums">package sqelevator.model;
+
+import java.util.Observable;
+
+<span class="fc" id="L5">public class ElevatorInfo implements IElevatorInfo</span>
+{
+	public static final int NUMBER_OF_FLOORS = 5;
+	
+<span class="fc" id="L9">	private int _elevatorNumber = 0;</span>
+	
+<span class="fc" id="L11">	private int _currentFloor = -1;</span>
+	
+<span class="fc" id="L13">	private int _speed = 0;</span>
+	
+<span class="fc" id="L15">	private int _direction = 0;</span>
+	
+<span class="fc" id="L17">	private int _acceleration = 0;</span>
+	
+<span class="fc" id="L19">	private int _doorStatus = 0;</span>
+	
+<span class="fc" id="L21">	private double _distance = 0;</span>
+	
+<span class="fc" id="L23">	private int _weight = 0;</span>
+	
+<span class="fc" id="L25">	private double _capacity = 0;</span>
+	
+<span class="fc" id="L27">	private int _targetFloor = 0;</span>
+	
+<span class="fc" id="L29">	private int _floorHeight = 0;</span>
+
+<span class="fc" id="L31">	private boolean[] _elevatorButtons = new boolean[NUMBER_OF_FLOORS];</span>
+	
+<span class="fc" id="L33">	private boolean[] _downButtons = new boolean[NUMBER_OF_FLOORS];</span>
+	
+<span class="fc" id="L35">	private boolean[] _upButtons = new boolean[NUMBER_OF_FLOORS];</span>
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#get_elevatorNumber()
+	 */
+	@Override
+	public int get_elevatorNumber() {
+<span class="nc" id="L42">		return _elevatorNumber;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#get_currentFloor()
+	 */
+	@Override
+	public int get_currentFloor() {
+<span class="fc" id="L50">		return _currentFloor;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#get_speed()
+	 */
+	@Override
+	public int get_speed() {
+<span class="fc" id="L58">		return _speed;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#get_direction()
+	 */
+	@Override
+	public int get_direction() {
+<span class="fc" id="L66">		return _direction;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#get_acceleration()
+	 */
+	@Override
+	public int get_acceleration() {
+<span class="fc" id="L74">		return _acceleration;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#get_doorStatus()
+	 */
+	@Override
+	public int get_doorStatus() {
+<span class="fc" id="L82">		return _doorStatus;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#get_distance()
+	 */
+	@Override
+	public double get_distance() {
+<span class="fc" id="L90">		return _distance;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#get_weight()
+	 */
+	@Override
+	public int get_weight() {
+<span class="fc" id="L98">		return _weight;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#get_targetFloor()
+	 */
+	@Override
+	public int get_targetFloor() {
+<span class="fc" id="L106">		return _targetFloor;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#get_floorHeight()
+	 */
+	@Override
+	public int get_floorHeight() {
+<span class="fc" id="L114">		return _floorHeight;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#get_elevatorButtons()
+	 */
+	@Override
+	public boolean[] get_elevatorButtons() {
+<span class="fc" id="L122">		return _elevatorButtons;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#get_downButtons()
+	 */
+	@Override
+	public boolean[] get_downButtons() {
+<span class="fc" id="L130">		return _downButtons;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#get_upButtons()
+	 */
+	@Override
+	public boolean[] get_upButtons() {
+<span class="fc" id="L138">		return _upButtons;</span>
+	}
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#set_elevatorNumber(int)
+	 */
+	@Override
+	public void set_elevatorNumber(int _elevatorNumber) {
+<span class="fc" id="L146">		this._elevatorNumber = _elevatorNumber;</span>
+<span class="fc" id="L147">	}</span>
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#set_currentFloor(int)
+	 */
+	@Override
+	public void set_currentFloor(int _currentFloor) {
+<span class="fc" id="L154">		this._currentFloor = _currentFloor;</span>
+<span class="fc" id="L155">	}</span>
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#set_speed(double)
+	 */
+	@Override
+	public void set_speed(int _speed) {
+<span class="fc" id="L162">		this._speed = _speed;</span>
+<span class="fc" id="L163">	}</span>
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#set_direction(int)
+	 */
+	@Override
+	public void set_direction(int _direction) {
+<span class="fc" id="L170">		this._direction = _direction;</span>
+<span class="fc" id="L171">	}</span>
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#set_acceleration(double)
+	 */
+	@Override
+	public void set_acceleration(int _acceleration) {
+<span class="fc" id="L178">		this._acceleration = _acceleration;</span>
+<span class="fc" id="L179">	}</span>
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#set_doorStatus(int)
+	 */
+	@Override
+	public void set_doorStatus(int _doorStatus) {
+<span class="fc" id="L186">		this._doorStatus = _doorStatus;</span>
+<span class="fc" id="L187">	}</span>
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#set_distance(double)
+	 */
+	@Override
+	public void set_distance(double _distance) {
+<span class="fc" id="L194">		this._distance = _distance;</span>
+<span class="fc" id="L195">	}</span>
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#set_weight(double)
+	 */
+	@Override
+	public void set_weight(int _weight) {
+<span class="fc" id="L202">		this._weight = _weight;</span>
+<span class="fc" id="L203">	}</span>
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#set_targetFloor(int)
+	 */
+	@Override
+	public void set_targetFloor(int _targetFloor) {
+<span class="fc" id="L210">		this._targetFloor = _targetFloor;</span>
+<span class="fc" id="L211">	}</span>
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#set_floorHeight(int)
+	 */
+	@Override
+	public void set_floorHeight(int _floorHeight) {
+<span class="fc" id="L218">		this._floorHeight = _floorHeight;</span>
+<span class="fc" id="L219">	}</span>
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#set_elevatorButtons(boolean[])
+	 */
+	@Override
+	public void set_elevatorButtons(boolean[] _elevatorButtons) {
+<span class="fc" id="L226">		this._elevatorButtons = _elevatorButtons;</span>
+<span class="fc" id="L227">	}</span>
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#set_downButtons(boolean[])
+	 */
+	@Override
+	public void set_downButtons(boolean[] _downButtons) {
+<span class="fc" id="L234">		this._downButtons = _downButtons;</span>
+<span class="fc" id="L235">	}</span>
+
+	/* (non-Javadoc)
+	 * @see sqelevator.model.IElevatorInfo#set_upButtons(boolean[])
+	 */
+	@Override
+	public void set_upButtons(boolean[] _upButtons) {
+<span class="fc" id="L242">		this._upButtons = _upButtons;</span>
+<span class="fc" id="L243">	}</span>
+
+	@Override
+	public double get_capacity() {
+<span class="fc" id="L247">		return _capacity;</span>
+	}
+
+	@Override
+	public void set_capacity(double _capacity) {
+<span class="fc" id="L252">		this._capacity = _capacity;</span>
+<span class="fc" id="L253">	}</span>
+
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (10) (09.01.2016 01:10:04)</div></body></html>

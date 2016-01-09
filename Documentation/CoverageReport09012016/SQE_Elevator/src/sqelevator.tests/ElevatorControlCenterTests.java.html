@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ElevatorControlCenterTests.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (10) (09.01.2016 01:10:04)</a> &gt; <a href="../../index.html" class="el_group">SQE_Elevator</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">sqelevator.tests</a> &gt; <span class="el_source">ElevatorControlCenterTests.java</span></div><h1>ElevatorControlCenterTests.java</h1><pre class="source lang-java linenums">package sqelevator.tests;
+
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
+
+import sqelevator.controller.ElevatorUpdateProvider;
+import sqelevator.gui.ElevatorControlCenter;
+import sqelevator.model.ElevatorInfo;
+import sqelevator.model.IElevator;
+import sqelevator.model.IElevatorInfo;
+
+<span class="fc" id="L16">public class ElevatorControlCenterTests</span>
+{
+	@Test
+	public void testDirectionUp()
+	{
+<span class="fc" id="L21">		ElevatorUpdateProvider updateProvider = new ElevatorUpdateProvider();</span>
+		
+<span class="fc" id="L23">		ElevatorInfo info = new ElevatorInfo();</span>
+<span class="fc" id="L24">		List&lt;IElevatorInfo&gt; infos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+<span class="fc" id="L25">		infos.add(info);</span>
+		
+<span class="fc" id="L27">		ElevatorControlCenter center = new ElevatorControlCenter(infos, updateProvider);</span>
+		
+<span class="fc" id="L29">		center.setDirection(0, IElevator.ELEVATOR_DIRECTION_UP);</span>
+		
+<span class="fc" id="L31">		assertEquals(IElevator.ELEVATOR_DIRECTION_UP, center.getDirection(0));</span>
+<span class="fc" id="L32">	}</span>
+	
+	@Test
+	public void testDirectionDown()
+	{
+<span class="fc" id="L37">		ElevatorUpdateProvider updateProvider = new ElevatorUpdateProvider();</span>
+		
+<span class="fc" id="L39">		ElevatorInfo info = new ElevatorInfo();</span>
+<span class="fc" id="L40">		List&lt;IElevatorInfo&gt; infos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+<span class="fc" id="L41">		infos.add(info);</span>
+		
+<span class="fc" id="L43">		ElevatorControlCenter center = new ElevatorControlCenter(infos, updateProvider);</span>
+		
+<span class="fc" id="L45">		center.setDirection(0, IElevator.ELEVATOR_DIRECTION_DOWN);</span>
+		
+<span class="fc" id="L47">		assertEquals(IElevator.ELEVATOR_DIRECTION_DOWN, center.getDirection(0));</span>
+<span class="fc" id="L48">	}</span>
+	
+	@Test
+	public void testDirectionUncommitted()
+	{
+<span class="fc" id="L53">		ElevatorUpdateProvider updateProvider = new ElevatorUpdateProvider();</span>
+		
+<span class="fc" id="L55">		ElevatorInfo info = new ElevatorInfo();</span>
+<span class="fc" id="L56">		List&lt;IElevatorInfo&gt; infos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+<span class="fc" id="L57">		infos.add(info);</span>
+		
+<span class="fc" id="L59">		ElevatorControlCenter center = new ElevatorControlCenter(infos, updateProvider);</span>
+		
+<span class="fc" id="L61">		center.setDirection(0, IElevator.ELEVATOR_DIRECTION_UNCOMMITTED);</span>
+		
+<span class="fc" id="L63">		assertEquals(IElevator.ELEVATOR_DIRECTION_UNCOMMITTED, center.getDirection(0));</span>
+<span class="fc" id="L64">	}</span>
+	
+	@Test
+	public void testWeight()
+	{
+<span class="fc" id="L69">		ElevatorUpdateProvider updateProvider = new ElevatorUpdateProvider();</span>
+		
+<span class="fc" id="L71">		ElevatorInfo info = new ElevatorInfo();</span>
+<span class="fc" id="L72">		List&lt;IElevatorInfo&gt; infos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+<span class="fc" id="L73">		infos.add(info);</span>
+		
+<span class="fc" id="L75">		ElevatorControlCenter center = new ElevatorControlCenter(infos, updateProvider);</span>
+		
+<span class="fc" id="L77">		center.setWeight(0, 200);</span>
+		
+<span class="fc" id="L79">		assertEquals(200, center.getWeight(0));</span>
+<span class="fc" id="L80">	}</span>
+	
+	@Test
+	public void testSpeed()
+	{
+<span class="fc" id="L85">		ElevatorUpdateProvider updateProvider = new ElevatorUpdateProvider();</span>
+		
+<span class="fc" id="L87">		ElevatorInfo info = new ElevatorInfo();</span>
+<span class="fc" id="L88">		List&lt;IElevatorInfo&gt; infos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+<span class="fc" id="L89">		infos.add(info);</span>
+		
+<span class="fc" id="L91">		ElevatorControlCenter center = new ElevatorControlCenter(infos, updateProvider);</span>
+		
+<span class="fc" id="L93">		center.setSpeed(0, 150);</span>
+		
+<span class="fc" id="L95">		assertEquals(150, center.getSpeed(0));</span>
+<span class="fc" id="L96">	}</span>
+	
+	@Test
+	public void testDoorStatusOpen()
+	{
+<span class="fc" id="L101">		ElevatorUpdateProvider updateProvider = new ElevatorUpdateProvider();</span>
+		
+<span class="fc" id="L103">		ElevatorInfo info = new ElevatorInfo();</span>
+<span class="fc" id="L104">		List&lt;IElevatorInfo&gt; infos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+<span class="fc" id="L105">		infos.add(info);</span>
+		
+<span class="fc" id="L107">		ElevatorControlCenter center = new ElevatorControlCenter(infos, updateProvider);</span>
+		
+<span class="fc" id="L109">		center.setDoorStatus(0, IElevator.ELEVATOR_DOORS_OPEN);</span>
+		
+<span class="fc" id="L111">		assertEquals(IElevator.ELEVATOR_DOORS_OPEN, center.getDoorStatus(0));</span>
+<span class="fc" id="L112">	}</span>
+	
+	@Test
+	public void testDoorStatusClosed()
+	{
+<span class="fc" id="L117">		ElevatorUpdateProvider updateProvider = new ElevatorUpdateProvider();</span>
+		
+<span class="fc" id="L119">		ElevatorInfo info = new ElevatorInfo();</span>
+<span class="fc" id="L120">		List&lt;IElevatorInfo&gt; infos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+<span class="fc" id="L121">		infos.add(info);</span>
+		
+<span class="fc" id="L123">		ElevatorControlCenter center = new ElevatorControlCenter(infos, updateProvider);</span>
+		
+<span class="fc" id="L125">		center.setDoorStatus(0, IElevator.ELEVATOR_DOORS_CLOSED);</span>
+		
+<span class="fc" id="L127">		assertEquals(IElevator.ELEVATOR_DOORS_CLOSED, center.getDoorStatus(0));</span>
+<span class="fc" id="L128">	}</span>
+	
+	@Test
+	public void testDoorStatusOpening()
+	{
+<span class="fc" id="L133">		ElevatorUpdateProvider updateProvider = new ElevatorUpdateProvider();</span>
+		
+<span class="fc" id="L135">		ElevatorInfo info = new ElevatorInfo();</span>
+<span class="fc" id="L136">		List&lt;IElevatorInfo&gt; infos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+<span class="fc" id="L137">		infos.add(info);</span>
+		
+<span class="fc" id="L139">		ElevatorControlCenter center = new ElevatorControlCenter(infos, updateProvider);</span>
+		
+<span class="fc" id="L141">		center.setDoorStatus(0, IElevator.ELEVATOR_DOORS_OPENING);</span>
+		
+<span class="fc" id="L143">		assertEquals(IElevator.ELEVATOR_DOORS_OPENING, center.getDoorStatus(0));</span>
+<span class="fc" id="L144">	}</span>
+	
+	@Test
+	public void testDoorStatusClosing()
+	{
+<span class="fc" id="L149">		ElevatorUpdateProvider updateProvider = new ElevatorUpdateProvider();</span>
+		
+<span class="fc" id="L151">		ElevatorInfo info = new ElevatorInfo();</span>
+<span class="fc" id="L152">		List&lt;IElevatorInfo&gt; infos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+<span class="fc" id="L153">		infos.add(info);</span>
+		
+<span class="fc" id="L155">		ElevatorControlCenter center = new ElevatorControlCenter(infos, updateProvider);</span>
+		
+<span class="fc" id="L157">		center.setDoorStatus(0, IElevator.ELEVATOR_DOORS_CLOSING);</span>
+		
+<span class="fc" id="L159">		assertEquals(IElevator.ELEVATOR_DOORS_CLOSING, center.getDoorStatus(0));</span>
+<span class="fc" id="L160">	}	</span>
+	
+	@Test
+	public void testTarget()
+	{
+<span class="fc" id="L165">		ElevatorUpdateProvider updateProvider = new ElevatorUpdateProvider();</span>
+		
+<span class="fc" id="L167">		ElevatorInfo info = new ElevatorInfo();</span>
+<span class="fc" id="L168">		List&lt;IElevatorInfo&gt; infos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+<span class="fc" id="L169">		infos.add(info);</span>
+		
+<span class="fc" id="L171">		ElevatorControlCenter center = new ElevatorControlCenter(infos, updateProvider);</span>
+		
+<span class="fc" id="L173">		center.setTarget(0, 4);</span>
+		
+<span class="fc" id="L175">		assertEquals(4, center.getTarget(0));</span>
+<span class="fc" id="L176">	}</span>
+	
+	@Test
+	public void testPosition()
+	{
+<span class="fc" id="L181">		ElevatorUpdateProvider updateProvider = new ElevatorUpdateProvider();</span>
+		
+<span class="fc" id="L183">		ElevatorInfo info = new ElevatorInfo();</span>
+<span class="fc" id="L184">		List&lt;IElevatorInfo&gt; infos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+<span class="fc" id="L185">		infos.add(info);</span>
+		
+<span class="fc" id="L187">		ElevatorControlCenter center = new ElevatorControlCenter(infos, updateProvider);</span>
+		
+<span class="fc" id="L189">		center.setPosition(0, 5);</span>
+		
+<span class="fc" id="L191">		assertEquals(5, center.getPosition(0));</span>
+<span class="fc" id="L192">	}</span>
+	
+	@Test
+	public void testElevatorButtons()
+	{
+<span class="fc" id="L197">		ElevatorUpdateProvider updateProvider = new ElevatorUpdateProvider();</span>
+<span class="fc" id="L198">		boolean[] elevatorButtons = new boolean[4];	</span>
+		
+<span class="fc" id="L200">		ElevatorInfo info = new ElevatorInfo();</span>
+<span class="fc" id="L201">		info.set_elevatorButtons(elevatorButtons);</span>
+<span class="fc" id="L202">		List&lt;IElevatorInfo&gt; infos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+<span class="fc" id="L203">		infos.add(info);</span>
+		
+<span class="fc" id="L205">		ElevatorControlCenter center = new ElevatorControlCenter(infos, updateProvider);</span>
+				
+<span class="fc bfc" id="L207" title="All 2 branches covered.">		for(int floor = 0; floor &lt; 4; floor++ )</span>
+		{
+<span class="fc bfc" id="L209" title="All 2 branches covered.">			elevatorButtons[floor] = false || floor == 2;</span>
+		}
+		
+<span class="fc" id="L212">		center.setElevatorButtons(0, elevatorButtons);</span>
+		
+<span class="fc" id="L214">		assertArrayEquals(new boolean []{false, false, true, false}, center.getElevatorButtons(0));</span>
+<span class="fc" id="L215">	}</span>
+	
+	@Test
+	public void testUpButtons()
+	{
+<span class="fc" id="L220">		ElevatorUpdateProvider updateProvider = new ElevatorUpdateProvider();</span>
+<span class="fc" id="L221">		boolean[] elevatorButtons = new boolean[4];	</span>
+		
+<span class="fc" id="L223">		ElevatorInfo info = new ElevatorInfo();</span>
+<span class="fc" id="L224">		info.set_elevatorButtons(elevatorButtons);</span>
+<span class="fc" id="L225">		List&lt;IElevatorInfo&gt; infos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+<span class="fc" id="L226">		infos.add(info);</span>
+		
+<span class="fc" id="L228">		ElevatorControlCenter center = new ElevatorControlCenter(infos, updateProvider);</span>
+				
+<span class="fc" id="L230">		boolean[] upButtons = new boolean[4];			</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">		for(int floor = 0; floor &lt; 4; floor++ )</span>
+		{
+<span class="fc bfc" id="L233" title="All 2 branches covered.">			upButtons[floor] = false || floor == 3;</span>
+		}
+		
+<span class="fc" id="L236">		center.setFloorButtonsUp(0, upButtons);</span>
+		
+<span class="fc" id="L238">		assertArrayEquals(new boolean []{false, false, false, true}, center.getFloorButtonsUp(0));</span>
+<span class="fc" id="L239">	}</span>
+	
+	@Test
+	public void testDownButtons()
+	{
+<span class="fc" id="L244">		ElevatorUpdateProvider updateProvider = new ElevatorUpdateProvider();</span>
+<span class="fc" id="L245">		boolean[] elevatorButtons = new boolean[4];	</span>
+		
+<span class="fc" id="L247">		ElevatorInfo info = new ElevatorInfo();</span>
+<span class="fc" id="L248">		info.set_elevatorButtons(elevatorButtons);</span>
+<span class="fc" id="L249">		List&lt;IElevatorInfo&gt; infos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+<span class="fc" id="L250">		infos.add(info);</span>
+		
+<span class="fc" id="L252">		ElevatorControlCenter center = new ElevatorControlCenter(infos, updateProvider);</span>
+				
+<span class="fc" id="L254">		boolean[] downButtons = new boolean[4];</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">		for(int floor = 0; floor &lt; 4; floor++ )</span>
+		{
+<span class="fc bfc" id="L257" title="All 2 branches covered.">			downButtons[floor] = false || floor == 0;</span>
+		}
+		
+<span class="fc" id="L260">		center.setFloorButtonsDown(0, downButtons);</span>
+		
+<span class="fc" id="L262">		assertArrayEquals(new boolean []{true, false, false, false}, center.getFloorButtonsDown(0));</span>
+<span class="fc" id="L263">	}</span>
+	
+	@Test
+	public void testFloorHeight()
+	{
+<span class="fc" id="L268">		ElevatorUpdateProvider updateProvider = new ElevatorUpdateProvider();</span>
+		
+<span class="fc" id="L270">		ElevatorInfo info = new ElevatorInfo();</span>
+<span class="fc" id="L271">		List&lt;IElevatorInfo&gt; infos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+<span class="fc" id="L272">		infos.add(info);</span>
+		
+<span class="fc" id="L274">		ElevatorControlCenter center = new ElevatorControlCenter(infos, updateProvider);</span>
+		
+<span class="fc" id="L276">		center.setFloorHeight(0, 50);</span>
+		
+<span class="fc" id="L278">		assertEquals(50, center.getFloorHeight(0));</span>
+<span class="fc" id="L279">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (10) (09.01.2016 01:10:04)</div></body></html>
