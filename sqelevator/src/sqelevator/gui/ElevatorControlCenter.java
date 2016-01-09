@@ -30,7 +30,7 @@ public class ElevatorControlCenter extends JFrame implements IElevatorControlCen
 		setTitle("Elevator Control Center");
 		getContentPane().setBackground(Color.white);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(800,800);
+		setSize(850,800);
 		setResizable(true);
 		setVisible(true);
 		
