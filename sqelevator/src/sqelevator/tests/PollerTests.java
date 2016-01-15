@@ -1,9 +1,5 @@
 package sqelevator.tests;
 
-import static org.easymock.EasyMock.expectLastCall;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.strictMock;
-import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.*;
 
 import java.util.List;
