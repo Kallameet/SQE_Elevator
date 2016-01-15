@@ -7,10 +7,10 @@ import java.util.List;
 
 import org.junit.Test;
 
+import sqelevator.IElevator;
 import sqelevator.controller.ElevatorUpdateProvider;
 import sqelevator.gui.ElevatorControlCenter;
 import sqelevator.model.ElevatorInfo;
-import sqelevator.model.IElevator;
 import sqelevator.model.IElevatorInfo;
 
 public class ElevatorControlCenterTests

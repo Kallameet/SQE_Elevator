@@ -4,8 +4,8 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
+import sqelevator.IElevator;
 import sqelevator.model.ElevatorInfo;
-import sqelevator.model.IElevator;
 import sqelevator.model.IElevatorInfo;
 
 public class ManualModeElevatorDummy implements IElevator {

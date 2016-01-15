@@ -4,6 +4,8 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
+import sqelevator.IElevator;
+
 public class ElevatorDataExchange implements IElevatorDataReader, IElevatorDataWriter {
 
 	private IElevator _elevator;

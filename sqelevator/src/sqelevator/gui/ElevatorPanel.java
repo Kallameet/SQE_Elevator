@@ -1,5 +1,6 @@
 package sqelevator.gui;
 
+import sqelevator.IElevator;
 import sqelevator.controller.ElevatorUpdateProvider;
 import sqelevator.model.*;
 import java.awt.Component;
@@ -20,8 +21,6 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
-import sqelevator.model.IElevator;
 
 /*
  * Represents the view of a single elevator 
@@ -97,11 +96,18 @@ public class ElevatorPanel extends JPanel implements IElevatorControl
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				for (int i = 0; i < _floors.size(); i++)
-					_floors.get(i).setButtonsEnabled(false);
-
-				_modeButtonManual.setSelected(false);
-				_updateProvider.notifyChanged(_elevatorNumber, ElevatorMode.AUTOMATIC, -1);
+				if(!_modeButtonAutomatic.isSelected())
+				{
+					_modeButtonAutomatic.setSelected(true);
+				}
+				else
+				{
+					for(int i = 0; i < _floors.size(); i++)
+						_floors.get(i).setButtonsEnabled(false);
+					
+					_modeButtonManual.setSelected(false);
+					_updateProvider.notifyChanged(_elevatorNumber, ElevatorMode.AUTOMATIC, -1);
+				}
 			}
 		});
 		_modePanel.add(_modeButtonAutomatic);
@@ -112,11 +118,18 @@ public class ElevatorPanel extends JPanel implements IElevatorControl
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				for (int i = 0; i < _floors.size(); i++)
-					_floors.get(i).setButtonsEnabled(true);
-
-				_modeButtonAutomatic.setSelected(false);
-				_updateProvider.notifyChanged(_elevatorNumber, ElevatorMode.MANUAL, -1);
+				if(!_modeButtonManual.isSelected())
+				{
+					_modeButtonManual.setSelected(true);
+				}
+				else
+				{
+					for(int i = 0; i < _floors.size(); i++)
+						_floors.get(i).setButtonsEnabled(true);
+					
+					_modeButtonAutomatic.setSelected(false);
+					_updateProvider.notifyChanged(_elevatorNumber, ElevatorMode.MANUAL, -1);
+				}
 			}
 		});
 		_modePanel.add(_modeButtonManual);

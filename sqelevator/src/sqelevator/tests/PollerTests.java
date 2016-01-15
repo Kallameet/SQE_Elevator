@@ -9,9 +9,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import sqelevator.IElevator;
 import sqelevator.dummy.ElevatorDummy;
 import sqelevator.model.ElevatorDataExchange;
-import sqelevator.model.IElevator;
 import sqelevator.model.IElevatorInfo;
 import sqelevator.model.Poller;
 

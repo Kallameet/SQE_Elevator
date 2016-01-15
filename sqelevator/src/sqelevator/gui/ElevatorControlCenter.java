@@ -10,8 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
+import sqelevator.IElevator;
 import sqelevator.controller.ElevatorUpdateProvider;
-import sqelevator.model.IElevator;
 import sqelevator.model.IElevatorInfo;
 
 public class ElevatorControlCenter extends JFrame implements IElevatorControlCenter {
