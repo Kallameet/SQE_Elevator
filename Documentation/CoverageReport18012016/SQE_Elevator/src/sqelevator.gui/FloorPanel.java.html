@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>FloorPanel.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (10) (18.01.2016 19:36:50)</a> &gt; <a href="../../index.html" class="el_group">SQE_Elevator</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">sqelevator.gui</a> &gt; <span class="el_source">FloorPanel.java</span></div><h1>FloorPanel.java</h1><pre class="source lang-java linenums"><span class="fc" id="L1">package sqelevator.gui;</span>
+
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JToggleButton;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+
+import sqelevator.controller.ElevatorUpdateProvider;
+import sqelevator.model.ElevatorMode;
+
+public class FloorPanel extends JPanel {
+
+	int _floorNumber;
+	int _elevatorNumber;
+	ElevatorUpdateProvider _updateProvider;
+	
+	JPanel _mainPanel;
+	JToggleButton _buttonUp;
+	JToggleButton _buttonDown;
+	JButton _buttonGoTo;
+	
+<span class="fc" id="L28">	public FloorPanel(int floorNumber, int elevatorNumber, ElevatorUpdateProvider updateProvider)</span>
+	{
+<span class="fc" id="L30">		_updateProvider = updateProvider;</span>
+<span class="fc" id="L31">		_elevatorNumber = elevatorNumber;</span>
+<span class="fc" id="L32">		_floorNumber = floorNumber;</span>
+<span class="fc" id="L33">		setBorder(new TitledBorder(null, &quot;Floor &quot; + floorNumber,TitledBorder.LEADING, TitledBorder.TOP, null, null));</span>
+<span class="fc" id="L34">		setBounds(10, 10, 568, 50);</span>
+		
+		// main Panel
+<span class="fc" id="L37">		_mainPanel = new JPanel();</span>
+<span class="fc" id="L38">		_mainPanel.setBorder(new EmptyBorder(5, 5, 5, 5));</span>
+<span class="fc" id="L39">		_mainPanel.setLayout(new BoxLayout(_mainPanel, BoxLayout.LINE_AXIS));</span>
+<span class="fc" id="L40">		_mainPanel.setAlignmentX(Component.LEFT_ALIGNMENT);</span>
+		
+<span class="fc" id="L42">		_buttonUp = new JToggleButton(&quot;Up&quot;);</span>
+<span class="fc" id="L43">		_buttonUp.setSelected(false);</span>
+<span class="fc" id="L44">		_buttonUp.setEnabled(false);</span>
+<span class="fc" id="L45">		_mainPanel.add(_buttonUp);</span>
+		
+<span class="fc" id="L47">		_buttonDown = new JToggleButton(&quot;Down&quot;);</span>
+<span class="fc" id="L48">		_buttonDown.setSelected(false);</span>
+<span class="fc" id="L49">		_buttonDown.setEnabled(false);</span>
+<span class="fc" id="L50">		_mainPanel.add(_buttonDown);</span>
+		
+<span class="fc" id="L52">		_buttonGoTo = new JButton(&quot;GO&quot;);</span>
+<span class="fc" id="L53">		_buttonGoTo.addActionListener(new ActionListener() </span>
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+<span class="nc" id="L57">				_updateProvider.notifyChanged(_elevatorNumber, ElevatorMode.MANUAL, _floorNumber);</span>
+<span class="nc" id="L58">			}</span>
+		});
+<span class="fc" id="L60">		_mainPanel.add(_buttonGoTo);</span>
+<span class="fc" id="L61">		add(_mainPanel);</span>
+<span class="fc" id="L62">	}</span>
+	
+	public void setUpSelected(boolean data)
+	{
+<span class="fc" id="L66">		_buttonUp.setSelected(data);</span>
+<span class="fc" id="L67">	}</span>
+	
+	public void setDownSelected(boolean data)
+	{
+<span class="fc" id="L71">		_buttonDown.setSelected(data);</span>
+<span class="fc" id="L72">	}</span>
+	
+	public void setButtonsEnabled(boolean data)
+	{
+<span class="nc" id="L76">		_buttonGoTo.setEnabled(data);</span>
+<span class="nc" id="L77">	}</span>
+	
+	public boolean getUpSelected()
+	{
+<span class="fc" id="L81">		return _buttonUp.isSelected();</span>
+	}
+	
+	public boolean getDownSelected()
+	{
+<span class="fc" id="L86">		return _buttonDown.isSelected();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (10) (18.01.2016 19:36:50)</div></body></html>

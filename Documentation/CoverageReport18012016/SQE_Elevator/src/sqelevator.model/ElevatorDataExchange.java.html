@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ElevatorDataExchange.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (10) (18.01.2016 19:36:50)</a> &gt; <a href="../../index.html" class="el_group">SQE_Elevator</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">sqelevator.model</a> &gt; <span class="el_source">ElevatorDataExchange.java</span></div><h1>ElevatorDataExchange.java</h1><pre class="source lang-java linenums">package sqelevator.model;
+
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
+
+import sqelevator.IElevator;
+
+public class ElevatorDataExchange implements IElevatorDataReader, IElevatorDataWriter {
+
+	private IElevator _elevator;
+	
+<span class="fc" id="L13">	public ElevatorDataExchange(IElevator elevator)</span>
+	{
+<span class="fc" id="L15">		_elevator = elevator;</span>
+<span class="fc" id="L16">	}</span>
+
+	@Override
+	public void setTarget(int elevatorNumber, int target) {
+		try {
+<span class="nc" id="L21">			_elevator.setTarget(elevatorNumber, target);</span>
+<span class="nc" id="L22">		} catch (RemoteException e) {</span>
+			// TODO Auto-generated catch block
+<span class="nc" id="L24">			e.printStackTrace();</span>
+		}
+<span class="nc" id="L26">	}</span>
+
+	@Override
+	public void setCommittedDirection(int elevatorNumber, int direction) {
+		try {
+<span class="nc" id="L31">			_elevator.setCommittedDirection(elevatorNumber, direction);</span>
+<span class="nc" id="L32">		} catch (RemoteException e) {</span>
+			// TODO Auto-generated catch block
+<span class="nc" id="L34">			e.printStackTrace();</span>
+		}
+		
+<span class="nc" id="L37">	}</span>
+
+	@Override
+	public List&lt;IElevatorInfo&gt; getElevatorInfos() {
+		try 
+		{
+<span class="fc" id="L43">			int numberOfElevators = _elevator.getElevatorNum();</span>
+			
+<span class="fc" id="L45">			List&lt;IElevatorInfo&gt; _elevatorInfos = new ArrayList&lt;IElevatorInfo&gt;();</span>
+			
+<span class="fc bfc" id="L47" title="All 2 branches covered.">			for(int i = 0; i &lt; numberOfElevators; i++)</span>
+			{
+<span class="fc" id="L49">				_elevatorInfos.add(getElevatorInfo(i));</span>
+			}
+			
+<span class="fc" id="L52">			return _elevatorInfos;</span>
+		} 
+<span class="nc" id="L54">		catch (RemoteException e) </span>
+		{
+			// TODO Auto-generated catch block
+<span class="nc" id="L57">			e.printStackTrace();</span>
+		}
+		
+<span class="nc" id="L60">		return null;</span>
+	}
+	
+	private IElevatorInfo getElevatorInfo(int elevatorNumber)
+	{
+<span class="fc" id="L65">		IElevatorInfo elevator = new ElevatorInfo();</span>
+		
+		try 
+		{
+<span class="fc" id="L69">			elevator.set_currentFloor(_elevator.getElevatorFloor(elevatorNumber));</span>
+<span class="fc" id="L70">			elevator.set_speed(_elevator.getElevatorSpeed(elevatorNumber));</span>
+<span class="fc" id="L71">			elevator.set_direction(_elevator.getCommittedDirection(elevatorNumber));</span>
+<span class="fc" id="L72">			elevator.set_acceleration(_elevator.getElevatorAccel(elevatorNumber));</span>
+<span class="fc" id="L73">			elevator.set_doorStatus(_elevator.getElevatorDoorStatus(elevatorNumber));</span>
+<span class="fc" id="L74">			elevator.set_distance(_elevator.getElevatorPosition(elevatorNumber));</span>
+<span class="fc" id="L75">			elevator.set_weight(_elevator.getElevatorWeight(elevatorNumber));</span>
+<span class="fc" id="L76">			elevator.set_capacity(_elevator.getElevatorCapacity(elevatorNumber));</span>
+<span class="fc" id="L77">			elevator.set_targetFloor(_elevator.getTarget(elevatorNumber));</span>
+<span class="fc" id="L78">			elevator.set_floorHeight(_elevator.getFloorHeight());</span>
+			
+<span class="fc" id="L80">			int numberOfFloors = _elevator.getFloorNum();</span>
+<span class="fc" id="L81">			boolean[] elevatorButtons = new boolean[numberOfFloors];</span>
+<span class="fc" id="L82">			boolean[] upButtons = new boolean[numberOfFloors];</span>
+<span class="fc" id="L83">			boolean[] downButtons = new boolean[numberOfFloors];</span>
+			
+<span class="fc bfc" id="L85" title="All 2 branches covered.">			for(int floor = 0; floor &lt; numberOfFloors; floor++ )</span>
+			{
+<span class="fc" id="L87">				elevatorButtons[floor] = _elevator.getElevatorButton(elevatorNumber, floor);</span>
+<span class="fc" id="L88">				upButtons[floor] = _elevator.getFloorButtonUp(floor);</span>
+<span class="fc" id="L89">				downButtons[floor] = _elevator.getFloorButtonDown(floor);</span>
+			}
+			
+<span class="fc" id="L92">			elevator.set_elevatorButtons(elevatorButtons);</span>
+<span class="fc" id="L93">			elevator.set_upButtons(upButtons);</span>
+<span class="fc" id="L94">			elevator.set_downButtons(downButtons);</span>
+			
+<span class="pc" id="L96">		} catch (RemoteException e) </span>
+		{
+			// TODO Auto-generated catch block
+<span class="nc" id="L99">			e.printStackTrace();</span>
+		}
+		
+<span class="fc" id="L102">		return elevator;</span>
+	}
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (10) (18.01.2016 19:36:50)</div></body></html>

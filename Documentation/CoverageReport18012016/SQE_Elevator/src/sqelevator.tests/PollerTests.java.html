@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>PollerTests.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (10) (18.01.2016 19:36:50)</a> &gt; <a href="../../index.html" class="el_group">SQE_Elevator</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">sqelevator.tests</a> &gt; <span class="el_source">PollerTests.java</span></div><h1>PollerTests.java</h1><pre class="source lang-java linenums">package sqelevator.tests;
+
+import static org.junit.Assert.*;
+
+import java.util.List;
+import java.util.Observer;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import sqelevator.IElevator;
+import sqelevator.dummy.ElevatorDummy;
+import sqelevator.model.ElevatorDataExchange;
+import sqelevator.model.IElevatorInfo;
+import sqelevator.model.Poller;
+
+
+<span class="fc" id="L19">public class PollerTests</span>
+{
+	IElevator elevatorDummy;
+	ElevatorDataExchange elevatorDataExchange;
+	Poller poller;
+	
+	@Before
+	public void setUp() throws Exception
+	{
+<span class="fc" id="L28">		elevatorDummy = new ElevatorDummy();		</span>
+<span class="fc" id="L29">		elevatorDataExchange = new ElevatorDataExchange(elevatorDummy);</span>
+<span class="fc" id="L30">		poller = new Poller(elevatorDataExchange);</span>
+<span class="fc" id="L31">		poller.start();</span>
+<span class="fc" id="L32">	}</span>
+	
+	@After
+	public void tearDown() throws Exception
+	{
+<span class="fc" id="L37">		poller.stop();</span>
+		
+<span class="fc" id="L39">		poller = null;</span>
+<span class="fc" id="L40">		elevatorDataExchange = null;</span>
+<span class="fc" id="L41">		elevatorDummy = null;		</span>
+<span class="fc" id="L42">	}</span>
+	
+
+	@Test
+	public void testGetCurrentFloor()
+	{			
+<span class="fc" id="L48">		List&lt;IElevatorInfo&gt; info = poller.getElevatorInfos();		</span>
+<span class="fc" id="L49">		assertEquals(2, info.get(2).get_currentFloor());		</span>
+<span class="fc" id="L50">	}</span>
+	
+	@Test
+	public void testGetSpeed()
+	{			
+<span class="fc" id="L55">		List&lt;IElevatorInfo&gt; info = poller.getElevatorInfos();		</span>
+<span class="fc" id="L56">		assertEquals(12, info.get(2).get_speed());		</span>
+<span class="fc" id="L57">	}</span>
+
+	@Test
+	public void testGetDirection()
+	{			
+<span class="fc" id="L62">		List&lt;IElevatorInfo&gt; info = poller.getElevatorInfos();		</span>
+<span class="fc" id="L63">		assertEquals(0, info.get(2).get_direction());		</span>
+<span class="fc" id="L64">	}</span>
+
+	@Test
+	public void testGetAcceleration()
+	{			
+<span class="fc" id="L69">		List&lt;IElevatorInfo&gt; info = poller.getElevatorInfos();		</span>
+<span class="fc" id="L70">		assertEquals(20, info.get(2).get_acceleration());		</span>
+<span class="fc" id="L71">	}</span>
+
+	@Test
+	public void testGetDoorStatus()
+	{			
+<span class="fc" id="L76">		List&lt;IElevatorInfo&gt; info = poller.getElevatorInfos();		</span>
+<span class="fc" id="L77">		assertEquals(1, info.get(2).get_doorStatus());		</span>
+<span class="fc" id="L78">	}</span>
+
+	@Test
+	public void testGetDistance()
+	{			
+<span class="fc" id="L83">		List&lt;IElevatorInfo&gt; info = poller.getElevatorInfos();		</span>
+<span class="fc" id="L84">		assertEquals(5, info.get(2).get_distance(), 0.1);		</span>
+<span class="fc" id="L85">	}</span>
+
+	@Test
+	public void testGetWeight()
+	{			
+<span class="fc" id="L90">		List&lt;IElevatorInfo&gt; info = poller.getElevatorInfos();		</span>
+<span class="fc" id="L91">		assertEquals(94, info.get(2).get_weight(), 0.1);		</span>
+<span class="fc" id="L92">	}</span>
+
+	@Test
+	public void testGetCapacity()
+	{			
+<span class="fc" id="L97">		List&lt;IElevatorInfo&gt; info = poller.getElevatorInfos();		</span>
+<span class="fc" id="L98">		assertEquals(120, info.get(2).get_capacity(), 0.1);		</span>
+<span class="fc" id="L99">	}</span>
+
+	@Test
+	public void testGetTargetFloor()
+	{			
+<span class="fc" id="L104">		List&lt;IElevatorInfo&gt; info = poller.getElevatorInfos();		</span>
+<span class="fc" id="L105">		assertEquals(4, info.get(2).get_targetFloor());		</span>
+<span class="fc" id="L106">	}</span>
+
+	@Test
+	public void testGetFloorHeight()
+	{			
+<span class="fc" id="L111">		List&lt;IElevatorInfo&gt; info = poller.getElevatorInfos();		</span>
+<span class="fc" id="L112">		assertEquals(8, info.get(2).get_floorHeight());		</span>
+<span class="fc" id="L113">	}</span>
+	
+	@Test
+	public void testGetUpButtons()
+	{			
+<span class="fc" id="L118">		List&lt;IElevatorInfo&gt; info = poller.getElevatorInfos();		</span>
+<span class="fc" id="L119">		assertArrayEquals(new boolean []{false, false, false, true, false}, info.get(1).get_upButtons());</span>
+<span class="fc" id="L120">	}</span>
+	
+	@Test
+	public void testGetElevatorButtons()
+	{			
+<span class="fc" id="L125">		List&lt;IElevatorInfo&gt; info = poller.getElevatorInfos();		</span>
+<span class="fc" id="L126">		assertArrayEquals(new boolean []{false, false, true, false, false}, info.get(1).get_elevatorButtons());</span>
+<span class="fc" id="L127">	}</span>
+
+	@Test
+	public void testGetDownButtons()
+	{			
+<span class="fc" id="L132">		List&lt;IElevatorInfo&gt; info = poller.getElevatorInfos();		</span>
+<span class="fc" id="L133">		assertArrayEquals(new boolean []{false, false, false, false, true}, info.get(1).get_downButtons());</span>
+<span class="fc" id="L134">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (10) (18.01.2016 19:36:50)</div></body></html>

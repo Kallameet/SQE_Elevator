@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ElevatorPanel.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (10) (18.01.2016 19:36:50)</a> &gt; <a href="../../index.html" class="el_group">SQE_Elevator</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">sqelevator.gui</a> &gt; <span class="el_source">ElevatorPanel.java</span></div><h1>ElevatorPanel.java</h1><pre class="source lang-java linenums"><span class="fc" id="L1">package sqelevator.gui;</span>
+
+import sqelevator.IElevator;
+import sqelevator.controller.ElevatorUpdateProvider;
+import sqelevator.model.*;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JToggleButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+
+/*
+ * Represents the view of a single elevator 
+ */
+public class ElevatorPanel extends JPanel implements IElevatorControl
+{
+
+	int _numberOfFloors;
+	int _elevatorNumber;
+	ElevatorUpdateProvider _updateProvider;
+
+	JPanel _mainPanel;
+	JPanel _modePanel;
+	JPanel _informationPanel;
+	JPanel _positionAndButtonPanel;
+	JPanel _positionPanel;
+	JPanel _buttonPanel;
+	JPanel _floorsPanel;
+	ArrayList&lt;FloorPanel&gt; _floors;
+
+	JLabel _floorHeightLabel;
+	JLabel _floorHeightLabelData;
+	JLabel _directionLabel;
+	JLabel _directionLabelData;
+	JLabel _speedLabel;
+	JLabel _speedLabelData;
+	JLabel _weightLabel;
+	JLabel _weightLabelData;
+	JLabel _doorsLabel;
+	JLabel _doorsLabelData;
+	JLabel _targetLabel;
+	JLabel _targetLabelData;
+	JLabel _directionArrowUp;
+	JLabel _directionArrowDown;
+	JLabel _currentFloor;
+
+	JToggleButton _modeButtonManual;
+	JToggleButton _modeButtonAutomatic;
+
+	JToggleButton _floor0Button;
+	JToggleButton _floor1Button;
+	JToggleButton _floor2Button;
+	JToggleButton _floor3Button;
+	JToggleButton _floor4Button;
+	JToggleButton _floor5Button;
+	ArrayList&lt;JToggleButton&gt; _elevatorButtons;
+
+<span class="fc" id="L71">	ImageIcon _arrowUp = new ImageIcon(&quot;res/img/arrow_up.png&quot;);</span>
+<span class="fc" id="L72">	ImageIcon _arrowDown = new ImageIcon(&quot;res/img/arrow_down.png&quot;);</span>
+<span class="fc" id="L73">	ImageIcon _arrowEmpty = new ImageIcon(&quot;res/img/arrow_empty.png&quot;);</span>
+
+<span class="fc" id="L75">	public ElevatorPanel(int number, IElevatorInfo elevator, ElevatorUpdateProvider updateProvider)</span>
+	{
+<span class="fc" id="L77">		_updateProvider = updateProvider;</span>
+<span class="fc" id="L78">		_elevatorNumber = number;</span>
+<span class="fc" id="L79">		setBorder(</span>
+<span class="fc" id="L80">				new TitledBorder(null, &quot;Elevator &quot; + (number + 1), TitledBorder.LEADING, TitledBorder.TOP, null, null));</span>
+<span class="fc" id="L81">		setBounds(10, 10, 568, 50);</span>
+
+		// main Panel
+<span class="fc" id="L84">		_mainPanel = new JPanel();</span>
+<span class="fc" id="L85">		_mainPanel.setBorder(new EmptyBorder(5, 5, 5, 5));</span>
+<span class="fc" id="L86">		_mainPanel.setLayout(new BoxLayout(_mainPanel, BoxLayout.PAGE_AXIS));</span>
+<span class="fc" id="L87">		_mainPanel.setAlignmentX(Component.CENTER_ALIGNMENT);</span>
+
+		// Buttons for mode
+<span class="fc" id="L90">		_modePanel = new JPanel();</span>
+<span class="fc" id="L91">		_modePanel.setLayout(new BoxLayout(_modePanel, BoxLayout.LINE_AXIS));</span>
+
+<span class="fc" id="L93">		_modeButtonAutomatic = new JToggleButton(&quot;Automatic&quot;);</span>
+<span class="fc" id="L94">		_modeButtonAutomatic.setSelected(false);</span>
+<span class="fc" id="L95">		_modeButtonAutomatic.addActionListener(new ActionListener()</span>
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+<span class="nc bnc" id="L99" title="All 2 branches missed.">				if(!_modeButtonAutomatic.isSelected())</span>
+				{
+<span class="nc" id="L101">					_modeButtonAutomatic.setSelected(true);</span>
+<span class="nc" id="L102">				}</span>
+				else
+				{
+<span class="nc bnc" id="L105" title="All 2 branches missed.">					for(int i = 0; i &lt; _floors.size(); i++)</span>
+<span class="nc" id="L106">						_floors.get(i).setButtonsEnabled(false);</span>
+					
+<span class="nc" id="L108">					_modeButtonManual.setSelected(false);</span>
+<span class="nc" id="L109">					_updateProvider.notifyChanged(_elevatorNumber, ElevatorMode.AUTOMATIC, -1);</span>
+				}
+<span class="nc" id="L111">			}</span>
+		});
+<span class="fc" id="L113">		_modePanel.add(_modeButtonAutomatic);</span>
+
+<span class="fc" id="L115">		_modeButtonManual = new JToggleButton(&quot;Manual&quot;);</span>
+<span class="fc" id="L116">		_modeButtonManual.setSelected(true);</span>
+<span class="fc" id="L117">		_modeButtonManual.addActionListener(new ActionListener()</span>
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+<span class="nc bnc" id="L121" title="All 2 branches missed.">				if(!_modeButtonManual.isSelected())</span>
+				{
+<span class="nc" id="L123">					_modeButtonManual.setSelected(true);</span>
+<span class="nc" id="L124">				}</span>
+				else
+				{
+<span class="nc bnc" id="L127" title="All 2 branches missed.">					for(int i = 0; i &lt; _floors.size(); i++)</span>
+<span class="nc" id="L128">						_floors.get(i).setButtonsEnabled(true);</span>
+					
+<span class="nc" id="L130">					_modeButtonAutomatic.setSelected(false);</span>
+<span class="nc" id="L131">					_updateProvider.notifyChanged(_elevatorNumber, ElevatorMode.MANUAL, -1);</span>
+				}
+<span class="nc" id="L133">			}</span>
+		});
+<span class="fc" id="L135">		_modePanel.add(_modeButtonManual);</span>
+
+<span class="fc" id="L137">		_mainPanel.add(_modePanel);</span>
+
+		// information box
+<span class="fc" id="L140">		_informationPanel = new JPanel();</span>
+<span class="fc" id="L141">		_informationPanel</span>
+<span class="fc" id="L142">				.setBorder(new TitledBorder(null, &quot;Information&quot;, TitledBorder.LEADING, TitledBorder.TOP, null, null));</span>
+<span class="fc" id="L143">		_informationPanel.setLayout(new GridLayout(6, 2));</span>
+<span class="fc" id="L144">		_mainPanel.add(_informationPanel);</span>
+
+		// labels for information box
+<span class="fc" id="L147">		_floorHeightLabel = new JLabel(&quot;floor height&quot;);</span>
+<span class="fc" id="L148">		_floorHeightLabel.setBounds(6, 115, 53, 14);</span>
+<span class="fc" id="L149">		_informationPanel.add(_floorHeightLabel);</span>
+
+<span class="fc" id="L151">		_floorHeightLabelData = new JLabel(&quot;0&quot;);</span>
+<span class="fc" id="L152">		_floorHeightLabelData.setHorizontalAlignment(SwingConstants.RIGHT);</span>
+<span class="fc" id="L153">		_floorHeightLabelData.setBounds(69, 115, 82, 14);</span>
+<span class="fc" id="L154">		_informationPanel.add(_floorHeightLabelData);</span>
+
+<span class="fc" id="L156">		_directionLabel = new JLabel(&quot;direction&quot;);</span>
+<span class="fc" id="L157">		_directionLabel.setBounds(6, 115, 53, 14);</span>
+<span class="fc" id="L158">		_informationPanel.add(_directionLabel);</span>
+
+<span class="fc" id="L160">		_directionLabelData = new JLabel(&quot;uncommitted&quot;);</span>
+<span class="fc" id="L161">		_directionLabelData.setHorizontalAlignment(SwingConstants.RIGHT);</span>
+<span class="fc" id="L162">		_directionLabelData.setBounds(69, 115, 82, 14);</span>
+<span class="fc" id="L163">		_informationPanel.add(_directionLabelData);</span>
+
+<span class="fc" id="L165">		_speedLabel = new JLabel(&quot;speed&quot;);</span>
+<span class="fc" id="L166">		_speedLabel.setBounds(6, 115, 53, 14);</span>
+<span class="fc" id="L167">		_informationPanel.add(_speedLabel);</span>
+
+<span class="fc" id="L169">		_speedLabelData = new JLabel(&quot;0&quot;);</span>
+<span class="fc" id="L170">		_speedLabelData.setHorizontalAlignment(SwingConstants.RIGHT);</span>
+<span class="fc" id="L171">		_speedLabelData.setBounds(69, 115, 82, 14);</span>
+<span class="fc" id="L172">		_informationPanel.add(_speedLabelData);</span>
+
+<span class="fc" id="L174">		_weightLabel = new JLabel(&quot;weight&quot;);</span>
+<span class="fc" id="L175">		_weightLabel.setBounds(6, 115, 53, 14);</span>
+<span class="fc" id="L176">		_informationPanel.add(_weightLabel);</span>
+
+<span class="fc" id="L178">		_weightLabelData = new JLabel(&quot;0&quot;);</span>
+<span class="fc" id="L179">		_weightLabelData.setHorizontalAlignment(SwingConstants.RIGHT);</span>
+<span class="fc" id="L180">		_weightLabelData.setBounds(69, 115, 82, 14);</span>
+<span class="fc" id="L181">		_informationPanel.add(_weightLabelData);</span>
+
+<span class="fc" id="L183">		_doorsLabel = new JLabel(&quot;doors&quot;);</span>
+<span class="fc" id="L184">		_doorsLabel.setBounds(6, 115, 53, 14);</span>
+<span class="fc" id="L185">		_informationPanel.add(_doorsLabel);</span>
+
+<span class="fc" id="L187">		_doorsLabelData = new JLabel(&quot;0&quot;);</span>
+<span class="fc" id="L188">		_doorsLabelData.setHorizontalAlignment(SwingConstants.RIGHT);</span>
+<span class="fc" id="L189">		_doorsLabelData.setBounds(69, 115, 82, 14);</span>
+<span class="fc" id="L190">		_informationPanel.add(_doorsLabelData);</span>
+
+<span class="fc" id="L192">		_targetLabel = new JLabel(&quot;target&quot;);</span>
+<span class="fc" id="L193">		_targetLabel.setBounds(6, 115, 53, 14);</span>
+<span class="fc" id="L194">		_informationPanel.add(_targetLabel);</span>
+
+<span class="fc" id="L196">		_targetLabelData = new JLabel(&quot;0&quot;);</span>
+<span class="fc" id="L197">		_targetLabelData.setHorizontalAlignment(SwingConstants.RIGHT);</span>
+<span class="fc" id="L198">		_targetLabelData.setBounds(69, 115, 82, 14);</span>
+<span class="fc" id="L199">		_informationPanel.add(_targetLabelData);</span>
+
+		// Panel for Positions and Buttons
+<span class="fc" id="L202">		_positionAndButtonPanel = new JPanel();</span>
+<span class="fc" id="L203">		_positionAndButtonPanel.setLayout(new BoxLayout(_positionAndButtonPanel, BoxLayout.LINE_AXIS));</span>
+
+<span class="fc" id="L205">		_mainPanel.add(_positionAndButtonPanel);</span>
+
+		// Panel for Position/Direction
+<span class="fc" id="L208">		_positionPanel = new JPanel();</span>
+<span class="fc" id="L209">		_positionPanel.setLayout(new BoxLayout(_positionPanel, BoxLayout.PAGE_AXIS));</span>
+<span class="fc" id="L210">		_positionPanel.setBorder(</span>
+<span class="fc" id="L211">				new TitledBorder(null, &quot;Position / Direction&quot;, TitledBorder.LEADING, TitledBorder.TOP, null, null));</span>
+<span class="fc" id="L212">		_positionPanel.setAlignmentX(CENTER_ALIGNMENT);</span>
+<span class="fc" id="L213">		_positionAndButtonPanel.add(_positionPanel);</span>
+<span class="fc" id="L214">		_positionAndButtonPanel.add(Box.createRigidArea(new Dimension(5, 0)));</span>
+
+<span class="fc" id="L216">		_directionArrowUp = new JLabel(&quot;&quot;);</span>
+<span class="fc" id="L217">		_directionArrowUp.setIcon(_arrowEmpty);</span>
+<span class="fc" id="L218">		_directionArrowUp.setBounds(10, 156, 35, 35);</span>
+<span class="fc" id="L219">		_positionPanel.add(_directionArrowUp);</span>
+<span class="fc" id="L220">		_positionPanel.add(Box.createRigidArea(new Dimension(150, 0)));</span>
+
+<span class="fc" id="L222">		_currentFloor = new JLabel(&quot;0&quot;);</span>
+<span class="fc" id="L223">		_currentFloor.setFont(new Font(&quot;Arial&quot;, Font.BOLD, 40));</span>
+<span class="fc" id="L224">		_positionPanel.add(_currentFloor);</span>
+
+<span class="fc" id="L226">		_directionArrowDown = new JLabel(&quot;&quot;);</span>
+<span class="fc" id="L227">		_directionArrowDown.setIcon(_arrowEmpty);</span>
+<span class="fc" id="L228">		_directionArrowDown.setBounds(10, 156, 35, 35);</span>
+<span class="fc" id="L229">		_positionPanel.add(_directionArrowDown);</span>
+
+		// Panel for Elevator Buttons
+<span class="fc" id="L232">		_elevatorButtons = new ArrayList&lt;JToggleButton&gt;();</span>
+<span class="fc" id="L233">		_buttonPanel = new JPanel();</span>
+<span class="fc" id="L234">		_buttonPanel.setLayout(new BoxLayout(_buttonPanel, BoxLayout.PAGE_AXIS));</span>
+<span class="fc" id="L235">		_buttonPanel.setBorder(new TitledBorder(null, &quot;Buttons&quot;, TitledBorder.LEADING, TitledBorder.TOP, null, null));</span>
+<span class="fc" id="L236">		_buttonPanel.add(Box.createRigidArea(new Dimension(50, 0)));</span>
+
+<span class="fc" id="L238">		_numberOfFloors = elevator.get_elevatorButtons().length;</span>
+
+<span class="fc bfc" id="L240" title="All 2 branches covered.">		for (int i = 0; i &lt; _numberOfFloors; i++)</span>
+		{
+<span class="fc" id="L242">			JToggleButton button = new JToggleButton(Integer.toString(i));</span>
+<span class="fc" id="L243">			button.setSelected(false);</span>
+<span class="fc" id="L244">			button.setEnabled(false);</span>
+<span class="fc" id="L245">			_elevatorButtons.add(button);</span>
+		}
+
+<span class="fc bfc" id="L248" title="All 2 branches covered.">		for (int i = _elevatorButtons.size() - 1; i &gt;= 0; i--)</span>
+		{
+<span class="fc" id="L250">			_buttonPanel.add(_elevatorButtons.get(i));</span>
+		}
+
+<span class="fc" id="L253">		_positionAndButtonPanel.add(_buttonPanel);</span>
+
+<span class="fc" id="L255">		_floors = new ArrayList&lt;FloorPanel&gt;();</span>
+<span class="fc" id="L256">		_floorsPanel = new JPanel();</span>
+<span class="fc" id="L257">		_floorsPanel.setLayout(new BoxLayout(_floorsPanel, BoxLayout.PAGE_AXIS));</span>
+<span class="fc" id="L258">		_floorsPanel.setBorder(new TitledBorder(null, &quot;Floors&quot;, TitledBorder.LEADING, TitledBorder.TOP, null, null));</span>
+
+<span class="fc bfc" id="L260" title="All 2 branches covered.">		for (int i = 0; i &lt; _numberOfFloors; i++)</span>
+		{
+<span class="fc" id="L262">			FloorPanel floor = new FloorPanel(i, _elevatorNumber, _updateProvider);</span>
+<span class="fc" id="L263">			_floors.add(floor);</span>
+		}
+
+<span class="fc bfc" id="L266" title="All 2 branches covered.">		for (int i = _numberOfFloors - 1; i &gt;= 0; i--)</span>
+		{
+<span class="fc" id="L268">			_floorsPanel.add(_floors.get(i));</span>
+		}
+
+<span class="fc" id="L271">		_mainPanel.add(_floorsPanel);</span>
+
+<span class="fc" id="L273">		add(_mainPanel);</span>
+<span class="fc" id="L274">		setVisible(true);</span>
+
+<span class="fc" id="L276">	}</span>
+
+	@Override
+	public void setPreferredSize(Dimension preferredSize)
+	{
+<span class="nc" id="L281">		super.setPreferredSize(new Dimension(300, 500));</span>
+<span class="nc" id="L282">	}</span>
+
+	@Override
+	public Dimension getPreferredSize()
+	{
+<span class="fc" id="L287">		return new Dimension(300, 500);</span>
+	}
+
+	@Override
+	public void setDirection(int data)
+	{
+<span class="fc" id="L293">		_directionArrowUp.setIcon(_arrowEmpty);</span>
+<span class="fc" id="L294">		_directionArrowDown.setIcon(_arrowEmpty);</span>
+
+<span class="fc bfc" id="L296" title="All 2 branches covered.">		if (data == IElevator.ELEVATOR_DIRECTION_UP)</span>
+		{
+<span class="fc" id="L298">			_directionLabelData.setText(&quot;up&quot;);</span>
+<span class="fc" id="L299">			_directionArrowUp.setIcon(_arrowUp);</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">		} else if (data == IElevator.ELEVATOR_DIRECTION_DOWN)</span>
+		{
+<span class="fc" id="L302">			_directionLabelData.setText(&quot;down&quot;);</span>
+<span class="fc" id="L303">			_directionArrowDown.setIcon(_arrowDown);</span>
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">		} else if (data == IElevator.ELEVATOR_DIRECTION_UNCOMMITTED)</span>
+<span class="fc" id="L305">			_directionLabelData.setText(&quot;uncommitted&quot;);</span>
+		else
+<span class="nc" id="L307">			_directionLabelData.setText(&quot;unknown direction&quot;);</span>
+<span class="fc" id="L308">	}</span>
+
+	@Override
+	public void setWeight(int data)
+	{
+<span class="fc" id="L313">		_weightLabelData.setText(data + &quot;&quot;);</span>
+<span class="fc" id="L314">	}</span>
+
+	@Override
+	public void setSpeed(int data)
+	{
+<span class="fc" id="L319">		_speedLabelData.setText(data + &quot;&quot;);</span>
+<span class="fc" id="L320">	}</span>
+
+	@Override
+	public void setDoorStatus(int data)
+	{
+<span class="fc bfc" id="L325" title="All 2 branches covered.">		if (data == IElevator.ELEVATOR_DOORS_OPEN)</span>
+<span class="fc" id="L326">			_doorsLabelData.setText(&quot;opened&quot;);</span>
+<span class="fc bfc" id="L327" title="All 2 branches covered.">		else if (data == IElevator.ELEVATOR_DOORS_CLOSED)</span>
+<span class="fc" id="L328">			_doorsLabelData.setText(&quot;closed&quot;);</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">		else if (data == IElevator.ELEVATOR_DOORS_OPENING)</span>
+<span class="fc" id="L330">			_doorsLabelData.setText(&quot;opening&quot;);</span>
+<span class="pc bpc" id="L331" title="1 of 2 branches missed.">		else if (data == IElevator.ELEVATOR_DOORS_CLOSING)</span>
+<span class="fc" id="L332">			_doorsLabelData.setText(&quot;closing&quot;);</span>
+		else
+<span class="nc" id="L334">			_doorsLabelData.setText(&quot;status not known&quot;);</span>
+<span class="fc" id="L335">	}</span>
+
+	@Override
+	public void setTarget(int floor)
+	{
+<span class="fc" id="L340">		_targetLabelData.setText(floor + &quot;&quot;);</span>
+<span class="fc" id="L341">	}</span>
+
+	@Override
+	public void setPosition(int data)
+	{
+<span class="fc" id="L346">		_currentFloor.setText(data + &quot;&quot;);</span>
+<span class="fc" id="L347">	}</span>
+
+	@Override
+	public void setElevatorButtons(boolean[] data)
+	{
+<span class="fc bfc" id="L352" title="All 2 branches covered.">		for (int i = 0; i &lt; _elevatorButtons.size(); i++)</span>
+		{
+<span class="fc" id="L354">			_elevatorButtons.get(i).setSelected(data[i]);</span>
+		}
+<span class="fc" id="L356">	}</span>
+
+	@Override
+	public void setFloorButtonsDown(boolean[] data)
+	{
+<span class="fc bfc" id="L361" title="All 2 branches covered.">		for (int i = 0; i &lt; _floors.size(); i++)</span>
+<span class="fc" id="L362">			_floors.get(i).setDownSelected(data[i]);</span>
+<span class="fc" id="L363">	}</span>
+
+	@Override
+	public void setFloorButtonsUp(boolean[] data)
+	{
+<span class="fc bfc" id="L368" title="All 2 branches covered.">		for (int i = 0; i &lt; _floors.size(); i++)</span>
+<span class="fc" id="L369">			_floors.get(i).setUpSelected(data[i]);</span>
+<span class="fc" id="L370">	}</span>
+
+	@Override
+	public void setFloorHeight(int height)
+	{
+<span class="fc" id="L375">		_floorHeightLabelData.setText(height + &quot;&quot;);</span>
+<span class="fc" id="L376">	}</span>
+
+	@Override
+	public void setTargetReached(int target)
+	{
+		// TODO Auto-generated method stub
+<span class="nc" id="L382">	}</span>
+
+	@Override
+	public int getDirection()
+	{
+<span class="fc bfc" id="L387" title="All 2 branches covered.">		if (_directionLabelData.getText() == &quot;up&quot;)</span>
+		{
+<span class="fc" id="L389">			return IElevator.ELEVATOR_DIRECTION_UP;</span>
+<span class="fc bfc" id="L390" title="All 2 branches covered.">		} else if (_directionLabelData.getText() == &quot;down&quot;)</span>
+		{
+<span class="fc" id="L392">			return IElevator.ELEVATOR_DIRECTION_DOWN;</span>
+<span class="pc bpc" id="L393" title="1 of 2 branches missed.">		} else if (_directionLabelData.getText() == &quot;uncommitted&quot;)</span>
+		{
+<span class="fc" id="L395">			return IElevator.ELEVATOR_DIRECTION_UNCOMMITTED;</span>
+		} else
+		{
+<span class="nc" id="L398">			return -1;</span>
+		}
+	}
+
+	@Override
+	public int getWeight()
+	{
+<span class="fc" id="L405">		return Integer.parseInt(_weightLabelData.getText());</span>
+	}
+
+	@Override
+	public int getSpeed()
+	{
+<span class="fc" id="L411">		return Integer.parseInt(_speedLabelData.getText());</span>
+	}
+
+	@Override
+	public int getDoorStatus()
+	{
+<span class="fc bfc" id="L417" title="All 2 branches covered.">		if (_doorsLabelData.getText() == &quot;opened&quot;)</span>
+		{
+<span class="fc" id="L419">			return IElevator.ELEVATOR_DOORS_OPEN;</span>
+<span class="fc bfc" id="L420" title="All 2 branches covered.">		} else if (_doorsLabelData.getText() == &quot;closed&quot;)</span>
+		{
+<span class="fc" id="L422">			return IElevator.ELEVATOR_DOORS_CLOSED;</span>
+<span class="fc bfc" id="L423" title="All 2 branches covered.">		} else if (_doorsLabelData.getText() == &quot;opening&quot;)</span>
+		{
+<span class="fc" id="L425">			return IElevator.ELEVATOR_DOORS_OPENING;</span>
+<span class="pc bpc" id="L426" title="1 of 2 branches missed.">		} else if (_doorsLabelData.getText() == &quot;closing&quot;)</span>
+		{
+<span class="fc" id="L428">			return IElevator.ELEVATOR_DOORS_CLOSING;</span>
+		} else
+		{
+<span class="nc" id="L431">			return -1;</span>
+		}
+	}
+
+	@Override
+	public int getTarget()
+	{
+<span class="fc" id="L438">		return Integer.parseInt(_targetLabelData.getText());</span>
+	}
+
+	@Override
+	public int getPosition()
+	{
+<span class="fc" id="L444">		return Integer.parseInt(_currentFloor.getText());</span>
+	}
+
+	@Override
+	public boolean[] getElevatorButtons()
+	{
+<span class="fc" id="L450">		boolean[] buttons = new boolean[_numberOfFloors];</span>
+
+<span class="fc bfc" id="L452" title="All 2 branches covered.">		for (int i = 0; i &lt; _numberOfFloors; i++)</span>
+<span class="fc" id="L453">			buttons[i] = _elevatorButtons.get(i).isSelected();</span>
+
+<span class="fc" id="L455">		return buttons;</span>
+	}
+
+	@Override
+	public boolean[] getFloorButtonsDown()
+	{
+<span class="fc" id="L461">		boolean[] buttons = new boolean[_numberOfFloors];</span>
+
+<span class="fc bfc" id="L463" title="All 2 branches covered.">		for (int i = 0; i &lt; _numberOfFloors; i++)</span>
+<span class="fc" id="L464">			buttons[i] = _floors.get(i).getDownSelected();</span>
+
+<span class="fc" id="L466">		return buttons;</span>
+	}
+
+	@Override
+	public boolean[] getFloorButtonsUp()
+	{
+<span class="fc" id="L472">		boolean[] buttons = new boolean[_numberOfFloors];</span>
+
+<span class="fc bfc" id="L474" title="All 2 branches covered.">		for (int i = 0; i &lt; _numberOfFloors; i++)</span>
+<span class="fc" id="L475">			buttons[i] = _floors.get(i).getUpSelected();</span>
+
+<span class="fc" id="L477">		return buttons;</span>
+	}
+
+	@Override
+	public int getFloorHeight()
+	{
+<span class="fc" id="L483">		return Integer.parseInt(_floorHeightLabelData.getText());</span>
+	}
+
+	@Override
+	public int getTargetReached()
+	{
+		// TODO Auto-generated method stub
+<span class="nc" id="L490">		return 0;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>AllTests (10) (18.01.2016 19:36:50)</div></body></html>
